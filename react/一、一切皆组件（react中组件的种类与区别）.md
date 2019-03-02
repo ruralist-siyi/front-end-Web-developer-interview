@@ -108,7 +108,29 @@
       this.input.focus();
       ```
 
-###### 关于为什么在react组件中this会丢失
+###### 5. React.memo（v16.6新增）
+
+类组件使用PureComponent或者shouldComponentUpdate能够优化props值不变时候的渲染性能(默认是shallowEqual)。现在， 你可以通过使用React.memo对function组件进行同样的优化。当然你也可以在方法的第二个参数自定义compare方法。**实际意义是：*函数式组件也有“shouldComponentUpdate”生命周期了***
+
+```
+const MyComponent = React.memo(function MyComponent(props) {
+  /* 只在props更改的时候才会重新渲染 */
+});
+
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+function MyComponent(props) {
+     /* render using props */
+}
+export default React.memo(MyComponent, areEqual);
+```
+
+###### 6. 关于为什么在react组件中this会丢失
 
 类声明和类表达式的主体以 严格模式 执行，主要包括构造函数、静态方法和原型方法。Getter 和 setter 函数也在严格模式下执行。不是React的原因，这是JavaScript中本来就有的。如果你传递一个函数名给一个变量，然后通过在变量后加括号()来调用这个方法，此时方法内部的this的指向就会丢失.
 
