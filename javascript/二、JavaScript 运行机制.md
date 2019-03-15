@@ -41,4 +41,45 @@ JS 会创建一个类似于 while (true) 的循环，每执行一次循环体的
 
 ###### 5. 多线程的优点和缺点分别是什么？
 
-优点：1、将耗时较长的操作（网络请求、图片下载、音频下载、数据库访问等）放在子线程中执行，可以防止主线程的卡死；2、可以发挥多核处理的优势，提升cpu的使用率。 缺点：1、每开辟一个子线程就消耗一定的资源； 2、会造成代码的可读性变差；3、如果出现多个线程同时访问一个资源，会出现资源争夺的情况
+优点：1、将耗时较长的操作（网络请求、图片下载、音频下载、数据库访问等）放在子线程中执行，可以防止主线程的卡死；2、可以发挥多核处理的优势，提升cpu的使用率。 缺点：1、每开辟一个子线程就消耗一定的资源； 2、会造成代码的可读性变差；3、如果出现多个线程同时访问一个资源，会出现资源争夺的情况。
+
+###### 6.  浏览器的event loop至少包含两个队列，macrotask队列和microtask队列
+
+1. microtask 即微任务，是由js引擎分发的任务，总是添加到当前任务队列末尾执行。另外在处理microtask期间，如果有新添加的microtasks，也会被添加到队列的末尾并执行： setTimeout, setInterval, setImmediate, I/O, UI rendering
+2. macrotask队列 等同于我们常说的任务队列，macrotask是由宿主环境分发的异步任务，事件轮询的时候总是一个一个任务队列去查看执行的，"任务队列"是一个先进先出的数据结构，排在前面的事件，优先被主线程读取：process.nextTick, Promise, MutationObserver
+3. 经典面试题：
+
+```javascript
+async function async1(){
+    console.log('async1 start')
+    await async2()
+    console.log('async1 end')
+}
+async function async2(){
+    console.log('async2')
+}
+console.log('script start')
+setTimeout(function(){
+    console.log('setTimeout') 
+},0)  
+async1();
+new Promise(function(resolve){
+    console.log('promise1')
+    resolve();
+}).then(function(){
+    console.log('promise2')
+})
+console.log('script end')
+解题思路：
+首先按照代码的执行顺序从上往下，js始终都是单线程的，先执行的肯定是同步任务，再根据进入任务队列的顺序先进先出，先微后宏。微任务是一次性将队列中存在的微任务执行完毕，宏任务是一个一个先进先出。
+Promise是一个构造函数，调用的时候会生成Promise实例。当Promise的状态改变时会调用then函数中定义的回调函数。我们都知道这个回调函数不会立刻执行，他是一个微任务会被添加到当前任务队列中的末尾，在下一轮任务开始执行之前执行。
+async/await成对出现，async标记的函数会返回一个Promise对象，可以使用then方法添加回调函数。await后面的语句会同步执行。但 await 下面的语句会被当成微任务添加到当前任务队列的末尾异步执行。
+答案： 
+> node8版本: script start -> async1 start -> async2 -> promise1 -> script end -> promise2 -> async1 end -> setTimeout
+<= node8版本: script start -> async1 start -> async2 -> promise1 -> script end -> async1 end -> promise2 -> setTimeout
+这主要是node.js8版本与其他版本的差异，他们对await的执行方法不同
+```
+
+4. 当前macrotask队列flush结束时就执行，不用等下一班车，而且microtask queue flush过程中产生的同类型microtask也会被立即处理掉，即允许阻塞。
+
+   下一次检查microtask queue的时候，发现只有一个Promise callback，立即执行，再检查发现又冒出来一个，继续执行，诶检查又刷出来一个，接着执行，再检查，没了，继续事件循环，检查immediate macrotask queue，这时才执行`setImmediate`回调。（也就是只要有微任务我们肯定是执行微任务的，当前进行的会执行，当前执行完的如果执行完后event loop还是检测到微任务，还是执行微任务，检测出没有微任务，我们就执行宏任务队列中的任务。）
