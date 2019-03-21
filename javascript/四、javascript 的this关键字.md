@@ -56,6 +56,52 @@ foo();                // undefined (默认绑定)
 
 obj.foo();            // 10
 
+// 隐式丢失（引用赋值）
+var a = 0;
+function foo(){
+    console.log(this.a);
+};
+var obj = {
+    a : 2,
+    foo:foo
+}
+//把obj.foo赋予别名bar，造成了隐式丢失，因为只是把foo()函数赋给了bar，而bar与obj对象则毫无关系
+var bar = obj.foo;
+bar();//0
+//等价于
+var a = 0;
+var bar = function foo(){
+    console.log(this.a);
+}
+bar();//0
+
+// 隐式丢失（参数传递）参数传递其实就是一种隐式赋值，因此我们传入的函数也会被隐式赋值。
+ function foo(){
+   console.log(this.a);
+ }
+
+function doFoo(fn){
+  //fn其实引用的是foo
+  fn();//调用位置
+}
+var obj = {
+  a:2,
+  foo:foo
+};
+var a = "oops,global";//a是全局对象的属性
+doFoo(obj.foo);//oops,global
+
+//如果把函数传入内置的函数中结果是一样的 
+ function foo(){
+   console.log(this.a);
+ }
+var obj = {
+  a:2,
+  foo:foo
+};
+var a = "oops,global";//a是全局对象的属性
+setTimeout(obj.foo,100);//oops,global
+
 3. 显性绑定
 
 function foo(){
