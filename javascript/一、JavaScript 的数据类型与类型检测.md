@@ -9,7 +9,7 @@
 
 ​	js为了方便操作基本类型值，ECMAscript 提供了3个特殊的引用类型：Boolean、Number 和 String。每当读取一个基本类型值的时候，后台就会创建一个对应的基本包装类型的对象，从而让我们能够调用一些方法来操作这些数据。
 
-```
+```javascript
 var s1 = "some text";
 // 在这里创建了一个字符串保存在了变量s1，字符串当然是基本类型值。
 // 但是此刻我们又调用了s1的方法，基本类型值不是对象，理论上不应该有方法。
@@ -31,7 +31,7 @@ s1 = null;
 
 2. instanceof：instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。（也就是只能用来判断两个对象是否属于实例关系，而不能判断一个对象实例具体属于哪种类型）。
 
-      ```
+      ```javascript
        var str = 'text';
        str instanceof String;  // false (包装类型)
        var arr = [1, 2, 3];
@@ -42,32 +42,32 @@ s1 = null;
 
 3. 用对象的 constructor 来判断对象类型（当检测 null 或者 undefined 类型的 constructor 属性时，js会报错！因为 null 和 undefined 根本就没有 constructor 属性）
 
-       ```
-       function cstor(variable) {
-       if (variable === null || variable === undefined) {
-           return 'Null or Undefined';
-       }
-       
-       var cst = variable.constructor;
-       
-       switch (cst) {
-           case Number:
-               return 'Number'
-           case String:
-               return 'String'
-           case Boolean:
-               return 'Boolean'
-           case Array:
-               return 'Array'
-           case Object:
-               return 'Object'
-       }
-       }
-       ```
+  ```javascript
+  function cstor(variable) {
+   if (variable === null || variable === undefined) {
+       return 'Null or Undefined';
+   }
+   
+   var cst = variable.constructor;
+   
+   switch (cst) {
+       case Number:
+           return 'Number'
+       case String:
+           return 'String'
+       case Boolean:
+           return 'Boolean'
+       case Array:
+           return 'Array'
+       case Object:
+           return 'Object'
+   }
+   }
+  ```
 
 4.  Object.prototype.toString.call(): 获取所有对象都拥有的[[Class]]这个内部属性, 返回字符串`"[object class]"`.
 
-   ```
+   ```javascript
    /**
     * @param type 字符串，要检测的类型的字符串
     * @return 类型检测函数
