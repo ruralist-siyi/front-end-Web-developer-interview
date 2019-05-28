@@ -14,6 +14,7 @@
 6. [JavaScript中的继承](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AD%E3%80%81javascript%E7%9A%84%E7%BB%A7%E6%89%BF.md)
 7. [JavaScript中的内存空间与垃圾回收机制](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B8%83%E3%80%81javascript%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6.md)
 8. [JavaScript中的变量作用域与闭包](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AB%E3%80%81javascript%E7%9A%84%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E9%97%AD%E5%8C%85.md)
+9. [Promise-异步编程的解决方案(一)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B9%9D%E3%80%81promise-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88(%E4%B8%80).md)
 
 ##### 3. react框架总结
 
