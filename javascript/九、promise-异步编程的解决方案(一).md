@@ -143,7 +143,9 @@ new Promise((resolve, reject) => {
 console.log(2);
 
 // 上面的代码是先输出2， 再输出1.
-// Promise立即执行，then函数分发到微任务Event Queue，process.nextTick同样也是分发到微任务Event Queue。Promise 的回调函数不是正常的异步任务，而是微任务（microtask）。它们的区别在于，正常任务追加到下一轮事件循环，微任务追加到本轮事件循环。这意味着，微任务的执行时间一定早于正常任务。
+// Promise立即执行，then函数分发到微任务Event Queue，Node.js中的process.nextTick同样也是分发到微任务Event Queue。
+// Promise 的回调函数不是正常的异步任务，而是微任务（microtask）。它们的区别在于，正常任务追加到下一轮事件循环，微任务追加到本轮事件循环。这意味着，微任务的执行时间一定早于正常任务。
+// tip: process.nextTick()的意思就是定义出一个动作，并且让这个动作在下一个事件轮询的时间点上执行。
 ```
 
 ##### 参考文档
