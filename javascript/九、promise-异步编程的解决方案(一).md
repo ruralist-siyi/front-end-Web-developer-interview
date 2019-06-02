@@ -59,7 +59,7 @@ ES6 中的 promise 实现是基于 Promises/A+ 规范。主要是对promise的�
       })
       
       Promise.all([promise1, promise2, promise3]).then(data => {
-        console.log('data', data); //  [1, 2]
+        console.log('data', data);
       }, err => {
         console.log('err', err); // err 3
       })
@@ -134,6 +134,8 @@ ES6 中的 promise 实现是基于 Promises/A+ 规范。主要是对promise的�
       // 2. done之后不会反悔promise对象，就是done之后不能使用catch等方法组成方法链。
       ```
 
+   
+
 四、微任务
 
 ```javascript
@@ -144,7 +146,7 @@ console.log(2);
 
 // 上面的代码是先输出2， 再输出1.
 // Promise立即执行，then函数分发到微任务Event Queue，Node.js中的process.nextTick同样也是分发到微任务Event Queue。
-// Promise 的回调函数不是正常的异步任务，而是微任务（microtask）。它们的区别在于，正常任务追加到下一轮事件循环，微任务追加到本轮事件循环。这意味着，微任务的执行时间一定早于正常任务。
+// Promise 的回调函数不是正常的异步任务，而是微任务（microtask）。宏任务必然是在微任务之后才执行的（因为微任务实际上是宏任务的其中一个步骤）。
 // tip: process.nextTick()的意思就是定义出一个动作，并且让这个动作在下一个事件轮询的时间点上执行。
 ```
 
