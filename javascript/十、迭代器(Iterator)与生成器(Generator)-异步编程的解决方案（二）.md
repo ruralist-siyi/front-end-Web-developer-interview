@@ -78,7 +78,7 @@ const obj = {
    iter.next() // { value: undefined, done: true }
    ```
 
-##### 5. Symbol.iterator接口最简单的实现：使Generator函数
+##### 5. Symbol.iterator接口最简单的实现：使用Generator函数
 
 ```javascript
 let myIterable = {
@@ -91,7 +91,6 @@ let myIterable = {
 [...myIterable] // [1, 2, 3]
 
 // 或者采用下面的简洁写法
-
 let obj = {
   * [Symbol.iterator]() {
     yield 'hello';
@@ -106,9 +105,40 @@ for (let x of obj) {
 // "world"
 ```
 
+#### 二、生成器(Generator)的认识与实践
 
+##### 1. 什么是Generator
 
+1. `Generator`函数是ES6提供的一种异步编程的解决方案。可以将其理解成是一个状态机，封装了多个内部状态。这个函数与普通的函数在写法上有两个不同点：
+    1. `function`关键字与函数名之间有一个星号
+    2. 函数体内部使用`yield`表达式，定义不同的内部状态
 
+2. 执行`Generator`函数会返回一个`Iterator`对象。`Generator`函数也可以理解为是一个`Iterator`对象生成函数。返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态，也就是调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象。
+3. `Generator`函数的返回也就`Iterator`对象必须要执行`next`方法。每一次执行`next`方法内部指针都会从函数头部或上一次停下来的地方开始执行，直到遇到下一个`yield`表达式（或`return`语句）为止。
 
+```javascript
+function* helloWorldGenerator() {
+  yield 'hello';
+  yield 'world';
+  return 'ending';
+}
 
+var hw = helloWorldGenerator();
 
+hw.next()
+// { value: 'hello', done: false }
+hw.next()
+// { value: 'world', done: false }
+hw.next()
+// { value: 'ending', done: true }
+hw.next()
+// { value: undefined, done: true }
+```
+
+##### 2. yield 表达式
+
+1. 暂停标志： Generator 函数返回的遍历器对象，只有调用`next`方法才会遍历下一个内部状态，所以其实提供了一种可以暂停执行的函数。`yield`表达式就是暂停标志。
+2. 惰性求值：`yield`表达式后面的表达式，只有当调用`next`方法、内部指针指向该语句时才会执行，因此等于为 JavaScript 提供了手动的“惰性求值”（Lazy Evaluation）的语法功能。
+3. yield与return的区别：`yield`可以记住暂停的位置，下一次可以再从该位置向后执行。`return`就不会有这个位置记忆功能。
+4. 非必须：`Generator`函数中可以没有`yield`表达式，如果没有的话，就是成为了一个仅仅暂停执行的函数。
+5. 只可以：`yield`表达式只可以`Generator`函数中。
