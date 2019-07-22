@@ -4,13 +4,74 @@
  * 盒模型包括： content + padding + border + margin
  * 两种盒子： 
  *  1. W3C标准盒模型：width/height = content的width/height;
- *  2. IE盒模型： width/height = content的width/height + border;
+ *  2. IE盒模型： width/height = content的width/height + border + padding;
+ * 
  * box-sizing是CSS3的新属性：允许以特定的方式定义匹配某个区域的特定元素。
  * 属性值：
  *  1. content-box: width/height = content的width/height;
- *  2. border-box: width/height = content的width/height + border;
+ *  2. border-box: width/height = content的width/height + border + padding;
  *  3. inherit: 从父元素继承;
  */
+
+
+ // 选择器
+ /**
+  * 1. 标签选择器 p {color: red;}
+  * 2. id选择器  #text {color: blue;}
+  * 3. 类选择器   .header {height: 100px;}
+  * 4. 交集选择器  选择p并且class="text"的元素: p.text{background: yellow;}
+  * 5. 并集选择器  选择p以及class="text"的元素  p,.text {background: yellow}
+  * 6. 后代选择器  也叫包含选择器： 不管层级，后面的所有   .box p a{font-size: 10px;}
+  * 7. 子元素选择器  不是所有,而是仅仅下一个层级 .box>p>a{font-size: 20px;}
+  * 8. 属性选择器   input[type="text"]{color: blue;}
+  * 9. 结构伪类选择器    a:link{ color: #ff6600 }
+  * 10. UI状态伪类选择器 a:hover {color: red;}
+  * 11. 兄弟选择器  子元素之后的同级兄弟元素: span~p{color: blue;}  选择紧接在另一个元素后的元素，而且二者有相同的父元素: span+p {color: red;}
+  * 12. 通配符选择器  *{padding: 0; margin: 0;}
+  * 13. 伪元素选择器 div::before {content: '我是插入的内容', background: red;}
+  * 
+  * 选择器权重
+  * !important > 内联(1000) > ID(0100) > 伪类|类 | 属性选择(0010) > 标签(0001) > 通配符、子选择器、相邻选择器(0000) > 继承 > 浏览器默认属性
+  * 
+  * CSS选择除前两个和最后两个以外的所有子元素：
+  * :nth-child(n+3):not(:nth-last-child(-n+2))
+  * :nth-child(n+3):nth-last-child(n+3)
+  */
+
+
+ // 伪类与伪元素
+ /**
+  * 1. 二者区别
+  *     1. 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息；
+  *     2. 伪元素本质上是创建了一个额外的元素；
+  *     3. CSS3规范中要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类。（IE8及以下的一些浏览器不兼容双冒号）;
+  * 
+  * 2. 伪类：
+  *     1. 表示状态: 
+  *         1. :link　　　选择未访问的链接；
+  *         2. :visited　 选择已访问的链接；
+  *         3. :hover　　选择鼠标指针移入链接；
+  *         4. :active　　被激活的链接，即按下单击鼠标左键但未松开；
+  *         5. :focus　　选择获取焦点的输入字段；
+  *     2. 结构化伪类：
+  *         1. :not　　　　　　否定伪类，用于匹配不符合参数选择器的元素；
+  *         2. :first-child　　 匹配元素的第一个子元素；
+  *         3. :last-child　　  匹配元素的最后一个子元素；
+  *         4. :nth-child　　  :nth-child根据元素的位置匹配一个或者多个元素，它接受一个an+b形式的参数（an+b最大数为匹配元素的个数）； :nth-of-type(odd) 奇数 :nth-of-type(even) 偶数
+  *     3. 表单相关伪类：
+  *         1. :checked　　匹配被选中的input元素，这个input元素包括radio和checkbox；
+  *         2. :default　　  匹配默认选中的元素，例如：提交按钮总是表单的默认按钮；
+  *         3. :disabled　  匹配禁用的表单元素；
+  *         4. :required　　匹配设置了required属性的表单元素；
+  * 
+  * 3. 伪元素：
+  *     1. ::before/:before　 　在某个元素之前插入一些内容；
+  *     2. ::after/:after　　　　在某个元素之后插入一些内容；
+  *     3. ::first-letter/:first-letter　　为某个元素中的文字的首字母或第一个字使用样式；
+  *     4. ::first-line/:first-line　　　　为某个元素的第一行文字使用样式
+  *     5. ::selection　　　　 匹配用户被用户选中或者处于高亮状态的部分；
+  *     6. ::placeholder　  　 匹配占位符的文本，只有元素设置了placeholder属性时，该伪元素才能生效；
+  */
 
 
  // BFC
@@ -44,7 +105,7 @@
   // 清浮动的方式
   /**
    * 1. 伪元素清浮动
-   * .box {content: '', display: block; height: 0; visibility: hidden; clear: both;}
+   * .box::after {content: '', display: block; height: 0; visibility: hidden; clear: both;}
    * 2. 添加额外标签
    * 浮动元素末尾添加一个空的标签例如 <div style=”clear:both”></div>
    * 3. 父元素设置 overflow：hidden
@@ -58,7 +119,8 @@
  * http协议其实就是超文本传输协议，超文本传输协议 (HTTP-Hypertext transfer protocol) 是一种详细规定了浏览器和万维网服务器之间互相通信的规则。
  * 
  * 2. TCP协议
- * 传输控制协议（TCP，Transmission Control Protocol）是为了在不可靠的互联网络上提供可靠的端到端字节流而专门设计的一个传输协议。TCP协议的作用是，保证数据通信的完整性和可靠性，防止丢包。
+ * 传输控制协议（TCP，Transmission Control Protocol）是为了在不可靠的互联网络上提供可靠的端到端字节流而专门设计的一个传输协议。
+ * TCP协议的作用是，保证数据通信的完整性和可靠性，防止丢包。
  * 
  * TCP协议对应于传输层，而HTTP协议对应于应用层，从本质上来说，二者没有可比性。Http协议是建立在TCP协议基础之上的
  * 
@@ -365,3 +427,36 @@ Function.prototype.myBind = function (newThis, ...rest) {
   *   优点： 1. 兼容性更好，可以兼容到IE8 2. 无需服务端配合处理非单页的url地址
   *   缺点： 1. 相同 hash 值不会触发动作将记录加入到历史栈中，而 pushState 则可以。 2. 看起来更丑。 3. 会导致锚点功能失效
   */
+
+  // DOM事件流
+  /**
+   * 当一个DOM事件触发时，它不是在触发的对象上只触发一次的，而是经历三个阶段。
+   * 1. 一开始从文档的根节点流向目标对象（捕获阶段）：它认为当某个事件发生时，父元素应该更早接收到事件，具体元素则最后接收到事件。
+   * 2. 然后在目标对向上被触发（目标阶段）
+   * 3. 之后再回溯到文档的根节点（冒泡阶段）：事件冒泡即事件开始时，由最具体的元素接收（也就是事件发生所在的节点），然后逐级传播到较为不具体的节点。（IE事件流）
+   * 
+   * 任何发生在w3c事件模型中的事件，首是进入捕获阶段，直到达到目标元素，再进入冒泡阶段
+   * 
+   * 可以选择是在捕获阶段还是冒泡阶段绑定事件处理函数，这是通过addEventListener()方法实现的，如果这个函数的最后一个参数是true(默认false)，则在捕获阶段绑定函数，反之false，在冒泡阶段绑定函数。
+   * 
+   * stopPropagation()阻止冒泡
+   * 
+   * 事件委托： 利用事件的冒泡原理来实现的，既然点击子元素，也会触发父元素的点击事件，那我们完全可以将子元素的事件要做的事写到父元素的事件里，
+   * 也就是将子元素的事件处理程序写到父元素的事件处理程序中，这就是事件委托；利用事件委托，只指定一个事件处理程序，就可以管理某一个类型的所有事件；
+   * 
+   * DOM0级事件: 通过将元素的事件处理程序属性（如onclick）的值设置为一个函数来指定事件处理程序的方法称为DOM0级方法，
+   * 它被认为是元素的方法，这时候的事件处理程序是在元素的作用域中运行（也就是this引用当前元素);
+   * 
+   * DOM2级事件：通过addEventListener()方法和removeEventListener()方法来处理指定和删除事件处理程序，这里添加的事件处理程序也是在其依附的元素的作用域中运行。DOM2级方法的好处是可以添加多个事件处理程序。
+   * 需要注意的是通过addEventListener()添加的事件只能使用removeEventListener()来移除，而且移除时传入的参数与添加时使用的参数要相同。
+	 * 
+	 * IE7、8兼容写法：attachEvent、detachEvent
+   */
+  
+   // DOM 0 级
+  var btn = document.getElementById('myBtn');
+  btn.onclick = function() {};
+
+  // DOM 2级
+  var handler = function() {};
+  btn.addEventListener("click",handler,false);
