@@ -460,3 +460,270 @@ Function.prototype.myBind = function (newThis, ...rest) {
   // DOM 2级
   var handler = function() {};
   btn.addEventListener("click",handler,false);
+
+  /**
+	 * instanceof: 判断一个实例是否属于某种类型，也可以在继承关系中用来判断一个实例是否属于它的父类型；
+	 * 
+	 * 对象都拥有__proto__属性指向其构造函数的prototype属性 也就是我们的原型；
+	 * 函数对象才拥有prototype属性；
+	 * 实例 __proto__ 到 原型对象 constructor 到 构造函数；
+	 * 
+	 * 几乎所有 JavaScript 中的对象都是位于原型链顶端的 Object 的实例。
+	 * 
+	 * 在 ES2015/ES6 中引入了 class 关键字，但那只是语法糖，JavaScript 仍然是基于原型的;
+	 * 
+	 * [[Prototype]] 可以通过 Object.getPrototypeOf() 和 Object.setPrototypeOf() 访问器来访问。这个等同于 JavaScript 的非标准但许多浏览器实现的属性 __proto__。
+	 * 
+	 * 每个实例对象（ object ）都有一个私有属性（称之为 __proto__ ）指向它的构造函数的原型对象（prototype ）。
+	 * 该原型对象也有一个自己的原型对象( __proto__ ) ，层层向上直到一个对象的原型对象为 null。这就是原型链。
+	 * 
+   */
+
+	var dog1 = new Dog();
+	dog1.__proto__ === Dog.prototype; // true
+	dog1.__proto__ === Object.prototype; // true
+	Dog.prototype.constructor === Dog; // true
+
+	// 实现new操作符
+   function myInstanceof(L, R) {
+			let RPrototype = R.prototype;
+			let LProto = L.__proto__;
+			while(true) {
+				if(LProto === null) {
+					return false;
+				}else if(LProto === RPrototype) {
+					return true;
+				}
+				LProto = LProto.__proto__;
+			}
+		}
+		
+		/**
+		 *  new 的过程
+		 * var obj = new Base();
+		 * 
+		 * 新生成了一个对象 var obj  = {};
+		 * 链接到原型绑定  obj.__proto__ = Base.prototype;
+		 * this返回新对象 Base.call(obj);
+		 */
+
+		 /**
+			* redux
+			* 把所有的state集中到组件顶部，能够灵活的将所有state各取所需的分发给所有的组件.给 React 应用提供「可预测化的状态管理」机制。
+			*
+			* 组件改变state的唯一方法是通过调用store的dispatch方法，触发一个action，这个action被对应的reducer处理，于是state完成更新.
+			*	组件可以派发(dispatch)行为(action)给store,而不是直接通知其它组件.其它组件可以通过订阅store中的状态(state)来刷新自己的视图.
+			*
+			* 1. action
+			*	用户是接触不到state的，只能有view触发，这个action可以理解为指令，需要发出多少动作就有多少指令
+			* action是一个对象，必须有一个叫type的参数，定义action类型
+			*
+			* 2. reducer
+			*	使用单独的一个reducer,也可以将多个reducer合并为一个reducer，即：combineReducers();
+			* action发出命令后将state放入reucer加工函数中，返回新的state,对state进行加工处理
+			*
+			* 3. store
+			* 使用createStore创建，整个应用状态(其实也就是数据)存储到到一个地方，称为store，这个store里面保存一棵状态树(state tree)；
+			* 提供subscribe，dispatch，getState这些方法。
+			*
+			* view在redux中会派发一个action，action通过store的dispatch方法派发给store,store接收到action，
+			* 连同之前到state，一起传给reducer，reducer返回一个新到数据给store,store去改变自己到state。这是redux的一个标准流程
+			*
+			* react-redux
+			* 单纯的redux是借用了全局变量来进行管理store中的state，缺点太多。
+			* react-redux把store直接集成到React应用的顶层props里面，只要各个子组件能访问到顶层props就行了.也就是利用了context;
+			*
+			*	1. Provider
+			*	 接受Redux的store作为props，并将其声明为context的属性，这个组件的目的是让所有组件都能够访问到Redux中的数据。 
+			*
+			* 2. connect
+			*	connect(mapStateToProps, mapDispatchToProps)(MyComponent)
+			*
+			*	 1. mapStateToProps
+			*			把state映射到props中去 ,其实也就是把Redux中的数据映射到React中的props中去。
+			*	 2. mapDispatchToProps
+			*			把各种dispatch也变成了props让你可以直接使用
+			* 
+			* 中间件(中间件都是对store.dispatch()的增强)
+			*	redux的中间件指的是action和store之间。之前我们说action只能是一个对象，所以action是一个对象直接派发给了store。但是现在，当我们使用了redux-thunk之后，action可以是函数了。
+			*	const store = createStore(
+      * 	reducers, 
+      * 	applyMiddleware(thunk, logger)
+      * );
+
+			* 实际上redux中间件非常多，比如说我们说的redux-log，可以记录action每次派发的日志，那他怎么记录呢？其实也很简单，
+			* 每次调用 action的时候，都会通过dispatch把这个action传递给store，那么我可以对dispatch做一个升级，dispatch不仅仅把action传递给store，
+			* 而且在每次传递之前呢，还通过console.log把state打印出来；
+			*
+			* reducer又是一个纯函数，也就是不能再reducer中进行异步操作，往往实际中，组件中发生的action后，在进入reducer之前需要完成一个异步任务,比如发送ajax请求后拿到数据后，再进入reducer,显然原生的redux是不支持这种操作的；
+			* 
+			* redux-thunk、redux-saga
+			*	redux-thunk是把异步操作放在action里面操作。而redux-saga采用的设计思想是，单独的把一个异步逻辑拆分出来，放在一个异步文件里面管理;
+			*	redux-thunk最重要的思想，就是可以接受一个返回函数的action creator。
+			*
+			*
+			* thunk与sage的区别
+			* 1. saga 是通过 Generator 函数来创建的，意味着可以用同步的方式写异步的代码；
+			* 2. Thunks 是在 action 被创建时才调用，Sagas 在应用启动时就开始调用，监听action 并做相应处理； （通过创建 Sagas 将所有的异步操作逻辑收集在一个地方集中处理）
+			* 3. saga启动的任务可以在任何时候通过手动取消，也可以把任务和其他的 Effects 放到 race 方法里可以自动取消；
+			* 4. 实际上 redux-saga 所有的任务都通用 yield Effects 来完成。
+			* 
+			* saga的优点
+			* 1. 流程拆分更细，异步的action 以及特殊要求的action（更复杂的action）都在sagas中做统一处理，流程逻辑更清晰，模块更干净；
+			* 2. 以用同步的方式写异步代码，可以做一些async 函数做不到的事情 (无阻塞并发、取消请求)
+			* 3. 能容易地测试 Generator 里所有的业务逻辑
+			*
+			* saga的缺点
+			* 1. action 任务拆分更细，原有流程上相当于多了一个环节。对开发者的设计和抽象拆分能力更有要求，代码复杂性也有所增加。
+			* 2. 异步请求相关的问题较难调试排查;
+		  */
+
+			/**
+			 * Flux 架构
+			 * 分为四个部分：View、 Action、 Dispatcher、 Store
+			 * 
+			 * 视图先要告诉 Dispatcher，让 Dispatcher dispatch 一个 action，Dispatcher 就像是个中转站，收到 View 发出的 action，然后转发给 Store。
+			 * 
+			 * Dispatcher 的作用是接收所有的 Action，然后发给所有的 Store。这里的 Action 可能是 View 触发的，也有可能是其他地方触发的，比如测试用例。转发的话也不是转发给某个 Store，而是所有 Store。
+			 * Store 的改变只能通过 Action，不能通过其他方式。也就是说 Store 不应该有公开的 Setter，所有 Setter 都应该是私有的，只能有公开的 Getter。
+			 * 
+			 * 
+			 * Redux 与 Flux 异同点
+			 * 1. redux 单一数据源：Flux 的数据源可以是多个。
+			 * 2. redux State 是只读的：Flux 的 State 可以随便改。
+			 * 3. redux 使用纯函数来执行修改：Flux 执行修改的不一定是纯函数。
+			 * 4. Redux 和 Flux 一样都是单向数据流。
+			 * 
+			 * Vuex
+			 * 1. State Vuex 使用单一状态树——是的，用一个对象就包含了全部的应用层级状态，将所需要的数据写放这里，类似于data。
+			 * 2. Getter 有时候我们需要从 store 中的 state 中派生出一些状态，使用Getter，类似于computed。
+			 * 3. Mutation 更改 Vuex 的 store 中的状态的唯一方法，类似methods。(mutation 是必须同步的，这个很好理解，和之前的  reducer 类似，不同步修改的话，会很难调试，不知道改变什么时候发生，也很难确定先后顺序)
+			 * 4. Action Action 提交的是 mutation，而不是直接变更状态，可以包含任意异步操作，这里主要是操作异步操作的，使用起来几乎和mutations方法一模一样,类似methods。
+			 * 5. Module 当应用变得非常复杂时，store 对象就有可能变得相当臃肿。Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块。
+			 * 
+			 * Redux： view——>actions——>reducer——>state变化——>view变化（同步异步一样）
+			 * Vuex： view——>commit——>mutations——>state变化——>view变化（同步操作） view——>dispatch——>actions——>mutations——>state变化——>view变化（异步操作）
+			 */
+
+			 /**
+				* Mobx
+				* 目前Mobx（3.x)和Vue（2.x)采用了相同的响应式原理: 为每个组件创建一个Watcher，在数据的getter和setter上加钩子，
+				* 当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。
+				* 当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。
+				*
+				* 在Mobx中，需要把数据声明为observable。
+				* 在Mobx中，数组并不是一个Array，而是一个类Array的对象，这是为了能监听到数据下标的赋值。相对的，在Vue中数组是一个Array，但是数组下标赋值要使用splice来进行，否则无法被检测到。
+			  */
+				
+			/**
+			 * react this.props.children： 表示组件的所有子节点
+			 * 可能值：1. 当前组件没有子节点，为 undefined 2.  若只有一个子节点，类型为 Object  3. 若有多个子节点，类型为 Array
+			 * 
+			 * React.Children 这个API我们虽然使用的比较少, 但是我们通过这个API可以操作children： React.Children.map(this.props.children, c => [[c, c]])
+			 * 
+			 * React.cloneElement(element,[props],[...children])
+			 * 
+			 * const {children} = this.props,
+			 * newChildren = React.Children.map(children, child =>
+			 * 	 React.cloneElement(
+			 * 	 child,
+			 * 	 { onChange: e => alert(e.target.value) }
+			 * ));
+			 */
+
+			 /**
+				* Vue与React对比
+				* 1. Vue 进行数据拦截/代理，它对侦测数据的变化更敏感、更精确，也间接对一些后续实现（比如 hooks，function based API）提供了很大的便利。
+				* 2. React setState 引起局部重新刷新。为了达到更好的性能，React 暴漏给开发者 shouldComponentUpdate 这个生命周期 hook. Vue 由于采用依赖追踪，默认就是优化状态：你动了多少数据，就触发多少更新，不多也不少，而 React 对数据变化毫无感知，它就提供 React.createElement 调用已生成 virtual dom.
+				* 3. 在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。。因此 Vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截.
+				* 4. Mobx 在 React 社区很流行，Mobx 采用了响应式的思想，实际上 Vue 也采用了几乎相同的反应系统。.React + Mobx 也可以被认为是更繁琐的 Vue。
+				* 5. Vue template 对比 JSX: 这只是「解决同一个问题的不同实现思路」，完全可以由开发者的个人偏好来决定。退一步讲，Vue 中也不是不可以使用 JSX；同样，JSX 也不是无法实现 Vue template 的特性，比如模版指令
+				* 6. Vue 和 React 实现复用: Vue 和 React 都是经历了：Mixin -> Hoc（Vue 比较少用，模版套模版，有点奇怪了）-> render prop（Vue 有类似思想的实现为 slot） -> hooks（Vue3.0 function based API）
+
+				* Vue 向上扩展就是 React，Vue 向下兼容后就类似于 jQuery，渐进式有时候比革命性更符合时代的要求。
+			  */
+
+				/**
+				 * React hook 底层是基于链表（Array）实现，每次组件被 render 的时候都会顺序执行所有的 hooks，
+				 * 因为底层是链表，每一个 hook 的 next 是指向下一个 hook 的，所以要求开发者不能在不同 hooks 调用中使用判断条件，因为 if 会导致顺序不正确，从而导致报错。
+				 * 
+				 * vue hook 只会被注册调用一次，vue 之所以能避开这些麻烦的问题，根本原因在于它对数据的响应是基于响应式的，是对数据进行了代理的。他不需要链表进行 hooks 记录，它对数据直接代理观察。
+				 * 但是 Vue 这种响应式的方案，也有自己的困扰。在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。
+				 * vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截。这算是因为设计理念带来的一个非常非常微小的 side effect。
+				 */
+
+				 /**
+					* React 为了弥补不必要的更新，会对 setState 的行为进行合并操作。因此 setState 有时候会是异步更新，但并不是总是“异步”
+					* 1. 在组件生命周期中或者react事件绑定中，setState是通过异步更新的。 
+					* 2. 在延时的回调或者原生事件绑定的回调中调用setState不一定是异步的。
+					*
+					* 调用setState发生了什么？
+					* 1. 当调用setState时，实际上会执行enqueueSetState方法，并对partialState以及_pendingStateQueue更新队列进行合并，最终通过enqueueUpdate执行state更新
+					* 2. 如果组件当前正处于update事务中，则先将Component存入dirtyComponent中。否则调用batchedUpdates处理。
+					* 
+					* 在代码中调用setState函数之后，React 会将传入的参数对象与组件当前的状态合并，然后触发所谓的调和过程（Reconciliation）。 
+					* 经过调和过程，React 会以相对高效的方式根据新的状态构建 React 元素树并且着手重新渲染整个UI界面。 
+					* 在 React 得到元素树之后，React 会自动计算出新的树与老树的节点差异，然后根据差异对界面进行最小化重渲染。 
+					* 在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。
+				  */
+
+					/**
+					 * React Diff
+					 * 传统 diff 算法 通过循环递归对节点进行依次对比。：效率低下，算法复杂度达到 O(n^3)。 React Diff算法将 O(n^3) 复杂度的问题转换成 O(n) 复杂度的问题。
+					 * 
+					 * 与传统diff多了三个优化点
+					 * 1. tree diff： 对树进行分层比较，两棵树只会对同一层次的节点进行比较。
+					 * 2. Component Diff：相同类生成相似树形结构，不同类生成不同树形结构 1. 同一类型的组件，按照原策略继续比较 virtual DOM tree。 2. 如果不是，则将该组件判断为 dirty component，从而替换整个组件下的所有子节点;即使这个这两个不同类型的组件中子节点都相同未改变，也是直接全部更新掉。因为不同类型的 component 是很少存在相似 DOM tree 的机会。
+					 * 3. Element Diff： 允许开发者对同一层级的同组子节点，添加唯一 key 进行区分，新老集合进行 diff 差异化对比，通过 key 发现新老集合中的节点都是相同的节点，因此无需进行节点删除和创建，只需要将老集合中节点的位置进行移动，更新为新集合中节点的位置。
+					 * 
+					 * 
+					 * 
+					 * Fiber（JavaScript运行时间过长，就会阻塞这些其他工作，可能导致掉帧）
+					 * Fiber解决这个问题的思路是增量更新。把渲染/更新过程（递归diff）拆分成一系列小任务，每次检查树上的一小部分，
+					 * 做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
+					 * 
+					 * React 中调用 render() 和 setState() 方法进行渲染和更新时，主要包含两个阶段：
+					 * 1. 调度阶段(Reconciler)： Fiber 之前的 reconciler（被称为 Stack reconciler）是自顶向下的递归算法，遍历新数据生成新的Virtual DOM，通过 Diff 算法，找出需要更新的元素，放到更新队列中去。
+					 * 2. 渲染阶段(Renderer)： 根据所在的渲染环境，遍历更新队列，调用渲染宿主环境的 API, 将对应元素更新渲染。在浏览器中，就是更新对应的DOM元素，除浏览器外，渲染环境还可以是 Native、WebGL 等等。
+					 * 
+					 * Fiber 改进思路是将调度阶段拆分成一系列小任务，每次加入一个节点至任务中，做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
+					 * 每次只做一小段，做完一段就把时间控制权交还给主线程，而不像之前长时间占用，从而实现对任务的暂停、恢复、复用灵活控制，这样主线程上的用户交互及动画可以快速响应，从而解决卡顿的问题。
+					 * 背后支持 API 是 requestIdleCallback；其作用是会在浏览器空闲时期依次调用函数， 这就可以在主事件循环中执行后台或低优先级的任务
+					 * 
+					 * Fiber对生命周期的影响
+					 * reconciliation阶段：componentWillMount componentWillReceiveProps shouldComponentUpdate componentWillUpdate
+					 * commit阶段：componentDidMount componentDidUpdate componentWillUnmount
+					 * 
+					 * 在reconciliation阶段，生命周期函数会被多次调用，开发者慎重调用这个阶段的生命周期。
+					 * 16.3+版本：警告componentWillMount，componentWillReceiveProps和componentWillUpdate即将废弃。
+					 * 17.0版本：正式废弃componentWillMount，componentWillReceiveProps和componentWillUpdate，这个阶段只有新的带UNSAFE_前缀的3个函数能用，旧的不会再触发。
+					 * 
+					 * getDerivedStateFromProps: 是一个静态方法，主要取代componentWillReceiveProps。
+					 * getSnapshotBeforeUpdate: 会在 render 之后执行，而执行之时 DOM 元素还没有被更新，给了一个机会去获取 DOM 信息，计算得到一个 snapshot。
+					 */
+
+					/**
+					 * 什么是函数式编程
+					 * 1. 不可变性(Immutability)：函数式编程中，你无法更改数据，也不能更改。 如果要改变或更改数据，则必须复制数据副本来更改。
+					 * 2. 纯函数(Pure Functions)：纯函数是始终接受一个或多个参数并计算参数并返回数据或函数的函数。 它没有副作用，例如设置全局状态，更改应用程序状态，它总是将参数视为不可变数据。
+					 * 3. 高阶函数 (Higher-Order Functions)
+					 * 4. 组合：在React中，我们将功能划分为小型可重用的纯函数，我们必须将所有这些可重用的函数放在一起，最终使其成为产品。
+					 */
+					
+
+					/**
+					 * git-flow 流程
+					 * 主要分支： 1. master: 永远处在即将发布(production-ready)状态 2. develop: 最新的开发状态
+					 * 辅助分支： 1. feature: 开发新功能的分支, 基于 develop, 完成后 merge 回 develop； 2.准备要发布版本的分支, 用来修复 bug. 基于 develop, 完成后 merge 回 develop 和 master
+					 * 					3. hotfix: 修复 master 上的问题, 等不及 release 版本就必须马上上线. 基于 master, 完成后 merge 回 master 和 develop；
+					 * 
+					 * rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。
+					 * 如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase develop 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。
+					 * 
+					 */
+
+					/**
+					 * Code-Splitting 部分，提出拆分组件的最佳方式（best way） 是使用动态的 import 方式。
+					 * React.lazy 和 suspense 并不适用于服务端渲染。
+					 * 
+					 */
