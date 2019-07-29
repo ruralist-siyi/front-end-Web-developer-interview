@@ -14,106 +14,106 @@
  */
 
 
- // 选择器
- /**
-  * 1. 标签选择器 p {color: red;}
-  * 2. id选择器  #text {color: blue;}
-  * 3. 类选择器   .header {height: 100px;}
-  * 4. 交集选择器  选择p并且class="text"的元素: p.text{background: yellow;}
-  * 5. 并集选择器  选择p以及class="text"的元素  p,.text {background: yellow}
-  * 6. 后代选择器  也叫包含选择器： 不管层级，后面的所有   .box p a{font-size: 10px;}
-  * 7. 子元素选择器  不是所有,而是仅仅下一个层级 .box>p>a{font-size: 20px;}
-  * 8. 属性选择器   input[type="text"]{color: blue;}
-  * 9. 结构伪类选择器    a:link{ color: #ff6600 }
-  * 10. UI状态伪类选择器 a:hover {color: red;}
-  * 11. 兄弟选择器  子元素之后的同级兄弟元素: span~p{color: blue;}  选择紧接在另一个元素后的元素，而且二者有相同的父元素: span+p {color: red;}
-  * 12. 通配符选择器  *{padding: 0; margin: 0;}
-  * 13. 伪元素选择器 div::before {content: '我是插入的内容', background: red;}
-  * 
-  * 选择器权重
-  * !important > 内联(1000) > ID(0100) > 伪类|类 | 属性选择(0010) > 标签(0001) > 通配符、子选择器、相邻选择器(0000) > 继承 > 浏览器默认属性
-  * 
-  * CSS选择除前两个和最后两个以外的所有子元素：
-  * :nth-child(n+3):not(:nth-last-child(-n+2))
-  * :nth-child(n+3):nth-last-child(n+3)
-  */
+// 选择器
+/**
+ * 1. 标签选择器 p {color: red;}
+ * 2. id选择器  #text {color: blue;}
+ * 3. 类选择器   .header {height: 100px;}
+ * 4. 交集选择器  选择p并且class="text"的元素: p.text{background: yellow;}
+ * 5. 并集选择器  选择p以及class="text"的元素  p,.text {background: yellow}
+ * 6. 后代选择器  也叫包含选择器： 不管层级，后面的所有   .box p a{font-size: 10px;}
+ * 7. 子元素选择器  不是所有,而是仅仅下一个层级 .box>p>a{font-size: 20px;}
+ * 8. 属性选择器   input[type="text"]{color: blue;}
+ * 9. 结构伪类选择器    a:link{ color: #ff6600 }
+ * 10. UI状态伪类选择器 a:hover {color: red;}
+ * 11. 兄弟选择器  子元素之后的同级兄弟元素: span~p{color: blue;}  选择紧接在另一个元素后的元素，而且二者有相同的父元素: span+p {color: red;}
+ * 12. 通配符选择器  *{padding: 0; margin: 0;}
+ * 13. 伪元素选择器 div::before {content: '我是插入的内容', background: red;}
+ * 
+ * 选择器权重
+ * !important > 内联(1000) > ID(0100) > 伪类|类 | 属性选择(0010) > 标签(0001) > 通配符、子选择器、相邻选择器(0000) > 继承 > 浏览器默认属性
+ * 
+ * CSS选择除前两个和最后两个以外的所有子元素：
+ * :nth-child(n+3):not(:nth-last-child(-n+2))
+ * :nth-child(n+3):nth-last-child(n+3)
+ */
 
 
- // 伪类与伪元素
- /**
-  * 1. 二者区别
-  *     1. 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息；
-  *     2. 伪元素本质上是创建了一个额外的元素；
-  *     3. CSS3规范中要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类。（IE8及以下的一些浏览器不兼容双冒号）;
-  * 
-  * 2. 伪类：
-  *     1. 表示状态: 
-  *         1. :link　　　选择未访问的链接；
-  *         2. :visited　 选择已访问的链接；
-  *         3. :hover　　选择鼠标指针移入链接；
-  *         4. :active　　被激活的链接，即按下单击鼠标左键但未松开；
-  *         5. :focus　　选择获取焦点的输入字段；
-  *     2. 结构化伪类：
-  *         1. :not　　　　　　否定伪类，用于匹配不符合参数选择器的元素；
-  *         2. :first-child　　 匹配元素的第一个子元素；
-  *         3. :last-child　　  匹配元素的最后一个子元素；
-  *         4. :nth-child　　  :nth-child根据元素的位置匹配一个或者多个元素，它接受一个an+b形式的参数（an+b最大数为匹配元素的个数）； :nth-of-type(odd) 奇数 :nth-of-type(even) 偶数
-  *     3. 表单相关伪类：
-  *         1. :checked　　匹配被选中的input元素，这个input元素包括radio和checkbox；
-  *         2. :default　　  匹配默认选中的元素，例如：提交按钮总是表单的默认按钮；
-  *         3. :disabled　  匹配禁用的表单元素；
-  *         4. :required　　匹配设置了required属性的表单元素；
-  * 
-  * 3. 伪元素：
-  *     1. ::before/:before　 　在某个元素之前插入一些内容；
-  *     2. ::after/:after　　　　在某个元素之后插入一些内容；
-  *     3. ::first-letter/:first-letter　　为某个元素中的文字的首字母或第一个字使用样式；
-  *     4. ::first-line/:first-line　　　　为某个元素的第一行文字使用样式
-  *     5. ::selection　　　　 匹配用户被用户选中或者处于高亮状态的部分；
-  *     6. ::placeholder　  　 匹配占位符的文本，只有元素设置了placeholder属性时，该伪元素才能生效；
-  */
+// 伪类与伪元素
+/**
+ * 1. 二者区别
+ *     1. 伪类本质上是为了弥补常规CSS选择器的不足，以便获取到更多信息；
+ *     2. 伪元素本质上是创建了一个额外的元素；
+ *     3. CSS3规范中要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类。（IE8及以下的一些浏览器不兼容双冒号）;
+ * 
+ * 2. 伪类：
+ *     1. 表示状态: 
+ *         1. :link　　　选择未访问的链接；
+ *         2. :visited　 选择已访问的链接；
+ *         3. :hover　　选择鼠标指针移入链接；
+ *         4. :active　　被激活的链接，即按下单击鼠标左键但未松开；
+ *         5. :focus　　选择获取焦点的输入字段；
+ *     2. 结构化伪类：
+ *         1. :not　　　　　　否定伪类，用于匹配不符合参数选择器的元素；
+ *         2. :first-child　　 匹配元素的第一个子元素；
+ *         3. :last-child　　  匹配元素的最后一个子元素；
+ *         4. :nth-child　　  :nth-child根据元素的位置匹配一个或者多个元素，它接受一个an+b形式的参数（an+b最大数为匹配元素的个数）； :nth-of-type(odd) 奇数 :nth-of-type(even) 偶数
+ *     3. 表单相关伪类：
+ *         1. :checked　　匹配被选中的input元素，这个input元素包括radio和checkbox；
+ *         2. :default　　  匹配默认选中的元素，例如：提交按钮总是表单的默认按钮；
+ *         3. :disabled　  匹配禁用的表单元素；
+ *         4. :required　　匹配设置了required属性的表单元素；
+ * 
+ * 3. 伪元素：
+ *     1. ::before/:before　 　在某个元素之前插入一些内容；
+ *     2. ::after/:after　　　　在某个元素之后插入一些内容；
+ *     3. ::first-letter/:first-letter　　为某个元素中的文字的首字母或第一个字使用样式；
+ *     4. ::first-line/:first-line　　　　为某个元素的第一行文字使用样式
+ *     5. ::selection　　　　 匹配用户被用户选中或者处于高亮状态的部分；
+ *     6. ::placeholder　  　 匹配占位符的文本，只有元素设置了placeholder属性时，该伪元素才能生效；
+ */
 
 
- // BFC
- /**
-  * 1. 什么是FC?
-  * 页面中的一块渲染区域，有一套渲染规则，决定了其子元素如何布局，以及和其他元素之间的关系和作用。
-  * 最常见的 Formatting context 有 Block fomatting context (简称BFC)和 Inline formatting context (简称IFC)。 
-  * 
-  * 2. 什么是BFC块格式化上下文?
-  * 它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-levelBox如何布局，并且与这个区域外部毫不相干。
-  * 
-  * 3. BFC的布局规则？
-  *     1. 内部的Box会在垂直方向，一个接一个地放置;Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠;
-  *     2. BFC的区域不会与float box重叠;计算BFC的高度时，浮动元素也参与计算;
-  *     3. BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素；
-  * 
-  * 4. 如何形成BFC?
-  *     1. display 为以下其中之一的值 inline-blocks，table-cells，table-captions； （display: flow-root(为BFC打造,触发BFC,无副作用)）;
-  *     2. float的值不为none;
-  *     3. overflow的值不为visible;
-  *     4. position的值不为relative和static;
-  *     5. css3中flex boxes;
-  * 
-  * 5. BFC解决的问题？
-  *     1. 解决父子嵌套元素在垂直方向的margin,父子元素是结合在一起的,他们两个的margi会取其中最大的值;（margin塌陷问题）
-  *     2. 不被浮动元素覆盖；
-  *     3. 浮动元素无法撑起父元素;
-  */
+// BFC
+/**
+ * 1. 什么是FC?
+ * 页面中的一块渲染区域，有一套渲染规则，决定了其子元素如何布局，以及和其他元素之间的关系和作用。
+ * 最常见的 Formatting context 有 Block fomatting context (简称BFC)和 Inline formatting context (简称IFC)。 
+ * 
+ * 2. 什么是BFC块格式化上下文?
+ * 它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-levelBox如何布局，并且与这个区域外部毫不相干。
+ * 
+ * 3. BFC的布局规则？
+ *     1. 内部的Box会在垂直方向，一个接一个地放置;Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠;
+ *     2. BFC的区域不会与float box重叠;计算BFC的高度时，浮动元素也参与计算;
+ *     3. BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素；
+ * 
+ * 4. 如何形成BFC?
+ *     1. display 为以下其中之一的值 inline-blocks，table-cells，table-captions； （display: flow-root(为BFC打造,触发BFC,无副作用)）;
+ *     2. float的值不为none;
+ *     3. overflow的值不为visible;
+ *     4. position的值不为relative和static;
+ *     5. css3中flex boxes;
+ * 
+ * 5. BFC解决的问题？
+ *     1. 解决父子嵌套元素在垂直方向的margin,父子元素是结合在一起的,他们两个的margi会取其中最大的值;（margin塌陷问题）
+ *     2. 不被浮动元素覆盖；
+ *     3. 浮动元素无法撑起父元素;
+ */
 
 
-  // 清浮动的方式
-  /**
-   * 1. 伪元素清浮动
-   * .box::after {content: '', display: block; height: 0; visibility: hidden; clear: both;}
-   * 2. 添加额外标签
-   * 浮动元素末尾添加一个空的标签例如 <div style=”clear:both”></div>
-   * 3. 父元素设置 overflow：hidden
-   * 4. 父元素也设置浮动
-   */
+// 清浮动的方式
+/**
+ * 1. 伪元素清浮动
+ * .box::after {content: '', display: block; height: 0; visibility: hidden; clear: both;}
+ * 2. 添加额外标签
+ * 浮动元素末尾添加一个空的标签例如 <div style=”clear:both”></div>
+ * 3. 父元素设置 overflow：hidden
+ * 4. 父元素也设置浮动
+ */
 
 
- // HTTP： 无状态的、无连接的、单向的应用层协议，采用请求/响应模式。即，通信请求只能由客户端发起，服务端对请求做出应答处理。
+// HTTP： 无状态的、无连接的、单向的应用层协议，采用请求/响应模式。即，通信请求只能由客户端发起，服务端对请求做出应答处理。
 /**
  * 1. http协议
  * http协议其实就是超文本传输协议，超文本传输协议 (HTTP-Hypertext transfer protocol) 是一种详细规定了浏览器和万维网服务器之间互相通信的规则。
@@ -152,126 +152,141 @@
  *      4. 客户端的浏览器根据双方同意的安全等级，建立会话密钥，然后利用网站的公钥将会话密钥加密，并传送给网站。
  *      5. Web服务器利用自己的私钥解密出会话密钥。
  *      6. Web服务器利用会话密钥加密与客户端之间的通信。
+ * 
+ * 6. HTTP2.0和HTTP1.X相比的新特性
+ *   1. 新的二进制格式（Binary Format），HTTP1.x的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，
+ * 		要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。
+ *   2. 多路复用（MultiPlexing），即连接共享，即每一个request都是是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，
+ * 		每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。
+ *   3. header压缩，如上文中所言，对前面提到过HTTP1.x的header带有大量信息，而且每次都要重复发送，HTTP2.0使用encoder来减少需要传输的header大小
+ *   4. 服务端推送（server push），HTTP2.0也具有server push功能。
+ * 
+ * 7. http2.0的多路复用和http1.x的长连接复用区别
+ *   http2.0多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；
+ *   http1.x的长连接复用一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；
+ * 	 HTTP2.0 通过让所有数据流共用同一个连接，可以更有效地使用 TCP 连接，让高带宽也能真正的服务于 HTTP 的性能提升。
+ * 
+ * https://www.cnblogs.com/heluan/p/8620312.html
  */
 
 // HTTP状态码(开发中，很多时候状态码与状况不一致。因为返回状态码200， 把错误信息抱在了response中)
 
- /**
-  * 1. 2xx: success状态码.
-  *     1. 200: OK; 请求成功且正常返回;
-  *     2. 204: NO CONTENT; 请求成功但是没资源返回;
-  *     3. 206: PARTIAL CONTENT; 对某部分的资源进行请求成功（通过Header中的字段: 客户端：Range, 服务端响应：Content-Range, 并行下载与断点续传的支持）;
-  * 
-  * 2. 3xx: Redirction重定向状态码.响应结果表明浏览器需要执行某些特殊的处理以正确处理请求.
-  *     1. 301: Moved Permanently; 永久重定向, 资源被永久的分配到新的资源地址URL;
-  *     2. 302: Found; 临时性重定向,请求的资源已被分配了新的 URI，希望用户(本次)能使用新的 URI 访问;
-  *     3. 304:  Not Modified; 是浏览器和服务器多确认了一次缓存有效性，再用的缓存;
-  * 
-  * 3. 4xx: Client Error 客户端错误状态码.
-  *     1. 400: Bad Request; 请求报文中存在语法错误;
-  *     2. 401: Unauthorized; 用来表示缺失或错误的认证(gateway 检测token throw 401);
-  *     3. 403: Forbidden; 当用户被认证后，但用户没有被授权在特定资源上执行操作;
-  *     4. 404:  Not Found; 请求的资源找不到;
-  *    
-  * 4. 5xx: Server Error 服务器错误状态码.
-  *     1. 502: Bad GateWay; 网关或代理角色的服务器出错。
-  *     2. 503: Service Unavailable; 该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
-  */
+/**
+ * 1. 2xx: success状态码.
+ *     1. 200: OK; 请求成功且正常返回;
+ *     2. 204: NO CONTENT; 请求成功但是没资源返回;
+ *     3. 206: PARTIAL CONTENT; 对某部分的资源进行请求成功（通过Header中的字段: 客户端：Range, 服务端响应：Content-Range, 并行下载与断点续传的支持）;
+ * 
+ * 2. 3xx: Redirction重定向状态码.响应结果表明浏览器需要执行某些特殊的处理以正确处理请求.
+ *     1. 301: Moved Permanently; 永久重定向, 资源被永久的分配到新的资源地址URL;
+ *     2. 302: Found; 临时性重定向,请求的资源已被分配了新的 URI，希望用户(本次)能使用新的 URI 访问;
+ *     3. 304:  Not Modified; 是浏览器和服务器多确认了一次缓存有效性，再用的缓存;
+ * 
+ * 3. 4xx: Client Error 客户端错误状态码.
+ *     1. 400: Bad Request; 请求报文中存在语法错误;
+ *     2. 401: Unauthorized; 用来表示缺失或错误的认证(gateway 检测token throw 401);
+ *     3. 403: Forbidden; 当用户被认证后，但用户没有被授权在特定资源上执行操作;
+ *     4. 404:  Not Found; 请求的资源找不到;
+ *    
+ * 4. 5xx: Server Error 服务器错误状态码.
+ *     1. 502: Bad GateWay; 网关或代理角色的服务器出错。
+ *     2. 503: Service Unavailable; 该状态码表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求。
+ */
 
 
 // HTTP缓存机制
 
-  /**
-   * 1. 强制缓存(服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。200(from cache))
-   
-   * 强缓存相关的HTTP header 的字段有两个 Expires以及Cache-Control
-   *    1. Expires: 缓存的过期时间：时间期限是服务器生成，存在着客户端和服务器的时间误差。(效果等同于Cache-Control的max-age,
-   *       如果有max-age会覆盖expires，如果二者都设置可能是为了兼容性，Expires是HTTP 1.0的，Cache-Control 是 HTTP 1.1 的字段。)
-   *    2. Cache-Control: 字段值定义为no-cache并不是说，不准使用缓存，而是需要走接下来的优先级相对较低的另一类--协商缓存。真正决定不用缓存内的资源是将该值定义为no-store。
-   * 
-   * 2. 协商缓存(将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验. 304)
-   
-   *    1. Last-Modified/If-Modified-Since: Last-Modified是服务器在响应请求时，告诉浏览器资源的最后修改时间。If-Modified-Since：再次请求服务器时，
-   *       通过此字段通知服务器上次请求时，服务器返回的资源最后修改时间。服务器收到请求后发现有头If-Modified-Since 则与被请求资源的最后修改时间进行比对。
-   *       若资源的最后修改时间大于If-Modified-Since，说明资源又被改动过，则响应整片资源内容，返回状态码200；若资源的最后修改时间小于或等于If-Modified-Since，
-   *       说明资源无新修改，则响应HTTP 304，告知浏览器继续使用所保存的cache。
+/**
+ * 1. 强制缓存(服务器通知浏览器一个缓存时间，在缓存时间内，下次请求，直接用缓存，不在时间内，执行比较缓存策略。200(from cache))
+ 
+ * 强缓存相关的HTTP header 的字段有两个 Expires以及Cache-Control
+ *    1. Expires: 缓存的过期时间：时间期限是服务器生成，存在着客户端和服务器的时间误差。(效果等同于Cache-Control的max-age,
+ *       如果有max-age会覆盖expires，如果二者都设置可能是为了兼容性，Expires是HTTP 1.0的，Cache-Control 是 HTTP 1.1 的字段。)
+ *    2. Cache-Control: 字段值定义为no-cache并不是说，不准使用缓存，而是需要走接下来的优先级相对较低的另一类--协商缓存。真正决定不用缓存内的资源是将该值定义为no-store。
+ * 
+ * 2. 协商缓存(将缓存信息中的Etag和Last-Modified通过请求发送给服务器，由服务器校验. 304)
+ 
+ *    1. Last-Modified/If-Modified-Since: Last-Modified是服务器在响应请求时，告诉浏览器资源的最后修改时间。If-Modified-Since：再次请求服务器时，
+ *       通过此字段通知服务器上次请求时，服务器返回的资源最后修改时间。服务器收到请求后发现有头If-Modified-Since 则与被请求资源的最后修改时间进行比对。
+ *       若资源的最后修改时间大于If-Modified-Since，说明资源又被改动过，则响应整片资源内容，返回状态码200；若资源的最后修改时间小于或等于If-Modified-Since，
+ *       说明资源无新修改，则响应HTTP 304，告知浏览器继续使用所保存的cache。
 
-   *    2. Etag/If-None-Match（优先级高于Last-Modified/If-Modified-Since）: Etag:服务器响应请求时，告诉浏览器当前资源在服务器的唯一标识（生成规则由服务器决定）;
-   *       If-None-Match: 再次请求服务器时，通过此字段通知服务器客户段缓存数据的唯一标识。服务器收到请求后发现有头If-None-Match 则与被请求资源的唯一标识进行比对，
-   *       不同，说明资源又被改动过，则响应整片资源内容，返回状态码200；相同，说明资源无新修改，则响应HTTP 304，告知浏览器继续使用所保存的cache。
-   */
+ *    2. Etag/If-None-Match（优先级高于Last-Modified/If-Modified-Since）: Etag:服务器响应请求时，告诉浏览器当前资源在服务器的唯一标识（生成规则由服务器决定）;
+ *       If-None-Match: 再次请求服务器时，通过此字段通知服务器客户段缓存数据的唯一标识。服务器收到请求后发现有头If-None-Match 则与被请求资源的唯一标识进行比对，
+ *       不同，说明资源又被改动过，则响应整片资源内容，返回状态码200；相同，说明资源无新修改，则响应HTTP 304，告知浏览器继续使用所保存的cache。
+ */
 
 
-   // 输入url到页面加载发生了什么？
-   /**
-    * 1. DNS解析 （1. 浏览器先搜索自己的DNS缓存。 2. 搜索操作系统中的缓存。 3. 搜索hosts文件。 4. 请求本地域名服务器。 5. 请求根域名服务器）.
-    * 2. TCP连接
-    * 3. 发送HTTP请求
-    * 4. 服务器处理请求并返回HTTP报文
-    * 5. 浏览器解析渲染页面
-    * 
-    * TCP的三次握手与四次挥手（https://www.imooc.com/article/20402）
-    * 
-    * 1. 名词解释
-    * tcp:transmission control protocol（传输控制协议）
-    * SYN:synchronous，表示建立连接
-    * ACK:acknowledgement，确认，表示响应
-    * PSH:push 表示有data数据的传送
-    * FIN:finish 结束，即关闭连接
-    * RST:reset 重置
-    * URG:urgent 紧急
-    * Sequence number:顺序号码
-    * Acknowledge number:确认号码
-    * 
-    * 2. 三次握手
-    *  1. client发送SYN=1，随机产生seq=m的数据包到server，并进入SYN_SENT状态，server发现SYN=1，知道client要建立连接。
-    *  2. server要发 送确认信息，向client发送ack number（m+1），SYN=1，ACK=1，以及自己随机产生的seq=n，并进入SYN_RCVD状态。
-    *  3. client检查ack number是否正确，以及ACK=1，如果正确，则发送ack number（n+1）和ACK=1，server收到后确认seq和ACK=1，
-    *     确认后则连接成功，双方进入ESTABLISHED状态。
-    * 
-    * 3. 四次挥手
-    *   1. client发送一个FIN=1，和一个seq=m，用来关闭和server的数据传输，并进入FIN_WAIT_1的状态。（注意：这里client发出FIN，只是代表client不会向server传送数据，但是server依然可以向client传送数据）
-    *   2. server收到FIN之后，发送一个ACK=1加上m+1到client，并进入CLOSE_WAIT状态。
-    *   3. server发送一个FIN=1加上一个seq=k到client，用来关闭和client的数据传输，并进入LAST_ACK状态。
-    *   4. client收到FIN后，发送ACK=1加上k+1到server，并进入TIME_WAIT状态，server收到后进入CLOSED状态，双方连接关闭。
-    */
+// 输入url到页面加载发生了什么？
+/**
+ * 1. DNS解析 （1. 浏览器先搜索自己的DNS缓存。 2. 搜索操作系统中的缓存。 3. 搜索hosts文件。 4. 请求本地域名服务器。 5. 请求根域名服务器）.
+ * 2. TCP连接
+ * 3. 发送HTTP请求
+ * 4. 服务器处理请求并返回HTTP报文
+ * 5. 浏览器解析渲染页面
+ * 
+ * TCP的三次握手与四次挥手（https://www.imooc.com/article/20402）
+ * 
+ * 1. 名词解释
+ * tcp:transmission control protocol（传输控制协议）
+ * SYN:synchronous，表示建立连接
+ * ACK:acknowledgement，确认，表示响应
+ * PSH:push 表示有data数据的传送
+ * FIN:finish 结束，即关闭连接
+ * RST:reset 重置
+ * URG:urgent 紧急
+ * Sequence number:顺序号码
+ * Acknowledge number:确认号码
+ * 
+ * 2. 三次握手
+ *  1. client发送SYN=1，随机产生seq=m的数据包到server，并进入SYN_SENT状态，server发现SYN=1，知道client要建立连接。
+ *  2. server要发 送确认信息，向client发送ack number（m+1），SYN=1，ACK=1，以及自己随机产生的seq=n，并进入SYN_RCVD状态。
+ *  3. client检查ack number是否正确，以及ACK=1，如果正确，则发送ack number（n+1）和ACK=1，server收到后确认seq和ACK=1，
+ *     确认后则连接成功，双方进入ESTABLISHED状态。
+ * 
+ * 3. 四次挥手
+ *   1. client发送一个FIN=1，和一个seq=m，用来关闭和server的数据传输，并进入FIN_WAIT_1的状态。（注意：这里client发出FIN，只是代表client不会向server传送数据，但是server依然可以向client传送数据）
+ *   2. server收到FIN之后，发送一个ACK=1加上m+1到client，并进入CLOSE_WAIT状态。
+ *   3. server发送一个FIN=1加上一个seq=k到client，用来关闭和client的数据传输，并进入LAST_ACK状态。
+ *   4. client收到FIN后，发送ACK=1加上k+1到server，并进入TIME_WAIT状态，server收到后进入CLOSED状态，双方连接关闭。
+ */
 
- // Websocket
- /**
-  * 浏览器可以通过JavaScript借助现有的HTTP协议来向服务器发出WebSocket连接的请求，当连接建立后，客户端和服务器端就可以直接通过TCP连接来直接进行数据交换。
-  * 这是由于websocket协议本质上就是一个TCP连接，所以在数据传输的稳定性和传输量上有所保证.
-  * 
-  * ws协议：普通请求，占用与HTTP相同的80端口。
-  * wss协议：基于SSL的安全传输，占用与TLS相同的443端口。
-  * 
-  * 
-  * Socket.IO就是对WebSocket的封装，并且实现了WebSocket的服务端代码。
-  * Socket.IO将WebSocket和轮询（Polling）机制以及其它的实时通信方式封装成了通用的接口，并且在服务端实现了这些实时机制的相应代码。
-  * 
-  * 心跳检测（reconnecting-websocket库）
-  */ 
+// Websocket
+/**
+ * 浏览器可以通过JavaScript借助现有的HTTP协议来向服务器发出WebSocket连接的请求，当连接建立后，客户端和服务器端就可以直接通过TCP连接来直接进行数据交换。
+ * 这是由于websocket协议本质上就是一个TCP连接，所以在数据传输的稳定性和传输量上有所保证.
+ * 
+ * ws协议：普通请求，占用与HTTP相同的80端口。
+ * wss协议：基于SSL的安全传输，占用与TLS相同的443端口。
+ * 
+ * 
+ * Socket.IO就是对WebSocket的封装，并且实现了WebSocket的服务端代码。
+ * Socket.IO将WebSocket和轮询（Polling）机制以及其它的实时通信方式封装成了通用的接口，并且在服务端实现了这些实时机制的相应代码。
+ * 
+ * 心跳检测（reconnecting-websocket库）
+ */
 
- const ws = new WebSocket();
- const heartCheck = {
-    timeout: 60000,
-    timeoutObj: null,
-    reset: function(){
-        clearTimeout(this.timeoutObj);
-        this.start();
-    },
-    start: function(){
-        this.timeoutObj = setTimeout(() => {
-            ws.send('HeartBeat');
-        },this.timeout)
-    },
-  };
-  
-  ws.onopen = function(){
-    heartCheck.start();
-  };
-  ws.onmessage = function(event){
-    heartCheck.reset();
-  };
+const ws = new WebSocket();
+const heartCheck = {
+	timeout: 60000,
+	timeoutObj: null,
+	reset: function () {
+		clearTimeout(this.timeoutObj);
+		this.start();
+	},
+	start: function () {
+		this.timeoutObj = setTimeout(() => {
+			ws.send('HeartBeat');
+		}, this.timeout)
+	},
+};
+
+ws.onopen = function () {
+	heartCheck.start();
+};
+ws.onmessage = function (event) {
+	heartCheck.reset();
+};
 
 // less中的要点
 /**
@@ -301,8 +316,8 @@
  * 
  * 6. 导入
  * @import "path"
- * */   
-/* 这种类型的格式会被转换到生成的css文件 */ 
+ * */
+/* 这种类型的格式会被转换到生成的css文件 */
 // 这种类型的格式不会被转换到生成的css文件
 
 
@@ -325,54 +340,55 @@
  */
 
 
- // 手写一个快速排序
+// 手写一个快速排序
 
- function quickSort(arr) {
-    if(Array.isArray(arr) && arr.length > 1) {
-        // 找出基准坐标
-        let pivotIndex = Math.floor(arr.length/2);
-        // 找到基准坐标的值
-        let privot = arr.splice(pivotIndex, 1)[0];
-        let left = [], right = [];
-        for(let value of arr) {
-            if(value < privot) {
-                left.push(value)
-            }else {
-                right.push(value)
-            }
-        }
-        return quickSort(left).concat(privot).quickSort(right);
-    }else {
-        return arr;
-    }
- }
+function quickSort(arr) {
+	if (Array.isArray(arr) && arr.length > 1) {
+		// 找出基准坐标
+		let pivotIndex = Math.floor(arr.length / 2);
+		// 找到基准坐标的值
+		let privot = arr.splice(pivotIndex, 1)[0];
+		let left = [],
+			right = [];
+		for (let value of arr) {
+			if (value < privot) {
+				left.push(value)
+			} else {
+				right.push(value)
+			}
+		}
+		return quickSort(left).concat(privot).quickSort(right);
+	} else {
+		return arr;
+	}
+}
 
 // 手动实现call、appy、bind
 
 Function.prototype.myCall = function (newThis, ...rest) {
-    if (typeof this !== 'function') {
-        throw new Error(this + 'must be a function');
-    }
-    newThis = newThis || window; // 如果传入的是undifined、null指向window
-    newThis.fn = this;
-    const result = newThis.fn(...rest.slice(1));
-    delete newThis.fn;
-    return result;
+	if (typeof this !== 'function') {
+		throw new Error(this + 'must be a function');
+	}
+	newThis = newThis || window; // 如果传入的是undifined、null指向window
+	newThis.fn = this;
+	const result = newThis.fn(...rest.slice(1));
+	delete newThis.fn;
+	return result;
 }
 
 Function.prototype.myBind = function (newThis, ...rest) {
-    if (typeof this !== 'function') {
-        throw new Error(this + 'must be a function');
-    }
-    const _this = this;
-    const bind = function (...args) {
-        // 可能返回了一个构造函数，我们可以 new F()，所以需要判断
-        if (this instanceof bind) {
-            return new _this(...args, ...arguments)
-        }
-        return _this.apply(newThis, rest.concat(args));
-    }
-    return bind;
+	if (typeof this !== 'function') {
+		throw new Error(this + 'must be a function');
+	}
+	const _this = this;
+	const bind = function (...args) {
+		// 可能返回了一个构造函数，我们可以 new F()，所以需要判断
+		if (this instanceof bind) {
+			return new _this(...args, ...arguments)
+		}
+		return _this.apply(newThis, rest.concat(args));
+	}
+	return bind;
 }
 
 // web安全（XSS攻击、CSRF攻击、点击劫持、SQL注入）
@@ -409,105 +425,105 @@ Function.prototype.myBind = function (newThis, ...rest) {
  */
 
 
- // 前端路由
- /**
-  * 1. hash模式
-  * hash 值的变化不会导致浏览器像服务器发送请求，而且 hash 的改变会触发 hashchange 事件，浏览器的前进后退也能对其进行控制，所以在 H5 的 history 模式出现之前，基本都是使用 hash 模式来实现前端路由。
-  * 
-  * 2. history 模式
-  *     1. HTML5 之前，浏览器就已经有了 history 对象。但在早期的 history 中只能用于多页面的跳转 history.go(-1); history.forward(); history.back();   
-  *     2. 在 HTML5 的规范中，history 新增了以下几个 API;
-  *         1. history.pushState();  // 添加新的状态到历史状态栈 ,在保留现有历史记录的同时，将 url 加入到历史记录中。
-  *         2. history.replaceState();  // 用新的状态代替当前状态,  会将历史记录中的当前页面历史替换为 url。
-  *         3. history.state // 返回当前状态对象
-  * 
-  *     history.pushState() 和 history.replaceState() 可以改变 url 同时，不会刷新页面，所以在 HTML5 中的 histroy 具备了实现前端路由的能力。
-  * 
-  * 3. hash 模式相比于 history 模式
-  *   优点： 1. 兼容性更好，可以兼容到IE8 2. 无需服务端配合处理非单页的url地址
-  *   缺点： 1. 相同 hash 值不会触发动作将记录加入到历史栈中，而 pushState 则可以。 2. 看起来更丑。 3. 会导致锚点功能失效
-  */
+// 前端路由
+/**
+ * 1. hash模式
+ * hash 值的变化不会导致浏览器像服务器发送请求，而且 hash 的改变会触发 hashchange 事件，浏览器的前进后退也能对其进行控制，所以在 H5 的 history 模式出现之前，基本都是使用 hash 模式来实现前端路由。
+ * 
+ * 2. history 模式
+ *     1. HTML5 之前，浏览器就已经有了 history 对象。但在早期的 history 中只能用于多页面的跳转 history.go(-1); history.forward(); history.back();   
+ *     2. 在 HTML5 的规范中，history 新增了以下几个 API;
+ *         1. history.pushState();  // 添加新的状态到历史状态栈 ,在保留现有历史记录的同时，将 url 加入到历史记录中。
+ *         2. history.replaceState();  // 用新的状态代替当前状态,  会将历史记录中的当前页面历史替换为 url。
+ *         3. history.state // 返回当前状态对象
+ * 
+ *     history.pushState() 和 history.replaceState() 可以改变 url 同时，不会刷新页面，所以在 HTML5 中的 histroy 具备了实现前端路由的能力。
+ * 
+ * 3. hash 模式相比于 history 模式
+ *   优点： 1. 兼容性更好，可以兼容到IE8 2. 无需服务端配合处理非单页的url地址
+ *   缺点： 1. 相同 hash 值不会触发动作将记录加入到历史栈中，而 pushState 则可以。 2. 看起来更丑。 3. 会导致锚点功能失效
+ */
 
-  // DOM事件流
-  /**
-   * 当一个DOM事件触发时，它不是在触发的对象上只触发一次的，而是经历三个阶段。
-   * 1. 一开始从文档的根节点流向目标对象（捕获阶段）：它认为当某个事件发生时，父元素应该更早接收到事件，具体元素则最后接收到事件。
-   * 2. 然后在目标对向上被触发（目标阶段）
-   * 3. 之后再回溯到文档的根节点（冒泡阶段）：事件冒泡即事件开始时，由最具体的元素接收（也就是事件发生所在的节点），然后逐级传播到较为不具体的节点。（IE事件流）
-   * 
-   * 任何发生在w3c事件模型中的事件，首是进入捕获阶段，直到达到目标元素，再进入冒泡阶段
-   * 
-   * 可以选择是在捕获阶段还是冒泡阶段绑定事件处理函数，这是通过addEventListener()方法实现的，如果这个函数的最后一个参数是true(默认false)，则在捕获阶段绑定函数，反之false，在冒泡阶段绑定函数。
-   * 
-   * stopPropagation()阻止冒泡
-   * 
-   * 事件委托： 利用事件的冒泡原理来实现的，既然点击子元素，也会触发父元素的点击事件，那我们完全可以将子元素的事件要做的事写到父元素的事件里，
-   * 也就是将子元素的事件处理程序写到父元素的事件处理程序中，这就是事件委托；利用事件委托，只指定一个事件处理程序，就可以管理某一个类型的所有事件；
-   * 
-   * DOM0级事件: 通过将元素的事件处理程序属性（如onclick）的值设置为一个函数来指定事件处理程序的方法称为DOM0级方法，
-   * 它被认为是元素的方法，这时候的事件处理程序是在元素的作用域中运行（也就是this引用当前元素);
-   * 
-   * DOM2级事件：通过addEventListener()方法和removeEventListener()方法来处理指定和删除事件处理程序，这里添加的事件处理程序也是在其依附的元素的作用域中运行。DOM2级方法的好处是可以添加多个事件处理程序。
-   * 需要注意的是通过addEventListener()添加的事件只能使用removeEventListener()来移除，而且移除时传入的参数与添加时使用的参数要相同。
-	 * 
-	 * IE7、8兼容写法：attachEvent、detachEvent
-   */
-  
-   // DOM 0 级
-  var btn = document.getElementById('myBtn');
-  btn.onclick = function() {};
+// DOM事件流
+/**
+ * 当一个DOM事件触发时，它不是在触发的对象上只触发一次的，而是经历三个阶段。
+ * 1. 一开始从文档的根节点流向目标对象（捕获阶段）：它认为当某个事件发生时，父元素应该更早接收到事件，具体元素则最后接收到事件。
+ * 2. 然后在目标对向上被触发（目标阶段）
+ * 3. 之后再回溯到文档的根节点（冒泡阶段）：事件冒泡即事件开始时，由最具体的元素接收（也就是事件发生所在的节点），然后逐级传播到较为不具体的节点。（IE事件流）
+ * 
+ * 任何发生在w3c事件模型中的事件，首是进入捕获阶段，直到达到目标元素，再进入冒泡阶段
+ * 
+ * 可以选择是在捕获阶段还是冒泡阶段绑定事件处理函数，这是通过addEventListener()方法实现的，如果这个函数的最后一个参数是true(默认false)，则在捕获阶段绑定函数，反之false，在冒泡阶段绑定函数。
+ * 
+ * stopPropagation()阻止冒泡
+ * 
+ * 事件委托： 利用事件的冒泡原理来实现的，既然点击子元素，也会触发父元素的点击事件，那我们完全可以将子元素的事件要做的事写到父元素的事件里，
+ * 也就是将子元素的事件处理程序写到父元素的事件处理程序中，这就是事件委托；利用事件委托，只指定一个事件处理程序，就可以管理某一个类型的所有事件；
+ * 
+ * DOM0级事件: 通过将元素的事件处理程序属性（如onclick）的值设置为一个函数来指定事件处理程序的方法称为DOM0级方法，
+ * 它被认为是元素的方法，这时候的事件处理程序是在元素的作用域中运行（也就是this引用当前元素);
+ * 
+ * DOM2级事件：通过addEventListener()方法和removeEventListener()方法来处理指定和删除事件处理程序，这里添加的事件处理程序也是在其依附的元素的作用域中运行。DOM2级方法的好处是可以添加多个事件处理程序。
+ * 需要注意的是通过addEventListener()添加的事件只能使用removeEventListener()来移除，而且移除时传入的参数与添加时使用的参数要相同。
+ * 
+ * IE7、8兼容写法：attachEvent、detachEvent
+ */
 
-  // DOM 2级
-  var handler = function() {};
-  btn.addEventListener("click",handler,false);
+// DOM 0 级
+var btn = document.getElementById('myBtn');
+btn.onclick = function () {};
 
-  /**
-	 * instanceof: 判断一个实例是否属于某种类型，也可以在继承关系中用来判断一个实例是否属于它的父类型；
-	 * 
-	 * 对象都拥有__proto__属性指向其构造函数的prototype属性 也就是我们的原型；
-	 * 函数对象才拥有prototype属性；
-	 * 实例 __proto__ 到 原型对象 constructor 到 构造函数；
-	 * 
-	 * 几乎所有 JavaScript 中的对象都是位于原型链顶端的 Object 的实例。
-	 * 
-	 * 在 ES2015/ES6 中引入了 class 关键字，但那只是语法糖，JavaScript 仍然是基于原型的;
-	 * 
-	 * [[Prototype]] 可以通过 Object.getPrototypeOf() 和 Object.setPrototypeOf() 访问器来访问。这个等同于 JavaScript 的非标准但许多浏览器实现的属性 __proto__。
-	 * 
-	 * 每个实例对象（ object ）都有一个私有属性（称之为 __proto__ ）指向它的构造函数的原型对象（prototype ）。
-	 * 该原型对象也有一个自己的原型对象( __proto__ ) ，层层向上直到一个对象的原型对象为 null。这就是原型链。
-	 * 
-   */
+// DOM 2级
+var handler = function () {};
+btn.addEventListener("click", handler, false);
 
-	var dog1 = new Dog();
-	dog1.__proto__ === Dog.prototype; // true
-	dog1.__proto__ === Object.prototype; // true
-	Dog.prototype.constructor === Dog; // true
+/**
+ * instanceof: 判断一个实例是否属于某种类型，也可以在继承关系中用来判断一个实例是否属于它的父类型；
+ * 
+ * 对象都拥有__proto__属性指向其构造函数的prototype属性 也就是我们的原型；
+ * 函数对象才拥有prototype属性；
+ * 实例 __proto__ 到 原型对象 constructor 到 构造函数；
+ * 
+ * 几乎所有 JavaScript 中的对象都是位于原型链顶端的 Object 的实例。
+ * 
+ * 在 ES2015/ES6 中引入了 class 关键字，但那只是语法糖，JavaScript 仍然是基于原型的;
+ * 
+ * [[Prototype]] 可以通过 Object.getPrototypeOf() 和 Object.setPrototypeOf() 访问器来访问。这个等同于 JavaScript 的非标准但许多浏览器实现的属性 __proto__。
+ * 
+ * 每个实例对象（ object ）都有一个私有属性（称之为 __proto__ ）指向它的构造函数的原型对象（prototype ）。
+ * 该原型对象也有一个自己的原型对象( __proto__ ) ，层层向上直到一个对象的原型对象为 null。这就是原型链。
+ * 
+ */
 
-	// 实现new操作符
-   function myInstanceof(L, R) {
-			let RPrototype = R.prototype;
-			let LProto = L.__proto__;
-			while(true) {
-				if(LProto === null) {
-					return false;
-				}else if(LProto === RPrototype) {
-					return true;
-				}
-				LProto = LProto.__proto__;
-			}
+var dog1 = new Dog();
+dog1.__proto__ === Dog.prototype; // true
+dog1.__proto__ === Object.prototype; // true
+Dog.prototype.constructor === Dog; // true
+
+// 实现new操作符
+function myInstanceof(L, R) {
+	let RPrototype = R.prototype;
+	let LProto = L.__proto__;
+	while (true) {
+		if (LProto === null) {
+			return false;
+		} else if (LProto === RPrototype) {
+			return true;
 		}
-		
-		/**
-		 *  new 的过程
-		 * var obj = new Base();
-		 * 
-		 * 新生成了一个对象 var obj  = {};
-		 * 链接到原型绑定  obj.__proto__ = Base.prototype;
-		 * this返回新对象 Base.call(obj);
-		 */
+		LProto = LProto.__proto__;
+	}
+}
 
-		 /**
+/**
+ *  new 的过程
+ * var obj = new Base();
+ * 
+ * 新生成了一个对象 var obj  = {};
+ * 链接到原型绑定  obj.__proto__ = Base.prototype;
+ * this返回新对象 Base.call(obj);
+ */
+
+/**
 			* redux
 			* 把所有的state集中到组件顶部，能够灵活的将所有state各取所需的分发给所有的组件.给 React 应用提供「可预测化的状态管理」机制。
 			*
@@ -578,60 +594,60 @@ Function.prototype.myBind = function (newThis, ...rest) {
 			* 2. 异步请求相关的问题较难调试排查;
 		  */
 
-			/**
-			 * Flux 架构
-			 * 分为四个部分：View、 Action、 Dispatcher、 Store
-			 * 
-			 * 视图先要告诉 Dispatcher，让 Dispatcher dispatch 一个 action，Dispatcher 就像是个中转站，收到 View 发出的 action，然后转发给 Store。
-			 * 
-			 * Dispatcher 的作用是接收所有的 Action，然后发给所有的 Store。这里的 Action 可能是 View 触发的，也有可能是其他地方触发的，比如测试用例。转发的话也不是转发给某个 Store，而是所有 Store。
-			 * Store 的改变只能通过 Action，不能通过其他方式。也就是说 Store 不应该有公开的 Setter，所有 Setter 都应该是私有的，只能有公开的 Getter。
-			 * 
-			 * 
-			 * Redux 与 Flux 异同点
-			 * 1. redux 单一数据源：Flux 的数据源可以是多个。
-			 * 2. redux State 是只读的：Flux 的 State 可以随便改。
-			 * 3. redux 使用纯函数来执行修改：Flux 执行修改的不一定是纯函数。
-			 * 4. Redux 和 Flux 一样都是单向数据流。
-			 * 
-			 * Vuex
-			 * 1. State Vuex 使用单一状态树——是的，用一个对象就包含了全部的应用层级状态，将所需要的数据写放这里，类似于data。
-			 * 2. Getter 有时候我们需要从 store 中的 state 中派生出一些状态，使用Getter，类似于computed。
-			 * 3. Mutation 更改 Vuex 的 store 中的状态的唯一方法，类似methods。(mutation 是必须同步的，这个很好理解，和之前的  reducer 类似，不同步修改的话，会很难调试，不知道改变什么时候发生，也很难确定先后顺序)
-			 * 4. Action Action 提交的是 mutation，而不是直接变更状态，可以包含任意异步操作，这里主要是操作异步操作的，使用起来几乎和mutations方法一模一样,类似methods。
-			 * 5. Module 当应用变得非常复杂时，store 对象就有可能变得相当臃肿。Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块。
-			 * 
-			 * Redux： view——>actions——>reducer——>state变化——>view变化（同步异步一样）
-			 * Vuex： view——>commit——>mutations——>state变化——>view变化（同步操作） view——>dispatch——>actions——>mutations——>state变化——>view变化（异步操作）
-			 */
+/**
+ * Flux 架构
+ * 分为四个部分：View、 Action、 Dispatcher、 Store
+ * 
+ * 视图先要告诉 Dispatcher，让 Dispatcher dispatch 一个 action，Dispatcher 就像是个中转站，收到 View 发出的 action，然后转发给 Store。
+ * 
+ * Dispatcher 的作用是接收所有的 Action，然后发给所有的 Store。这里的 Action 可能是 View 触发的，也有可能是其他地方触发的，比如测试用例。转发的话也不是转发给某个 Store，而是所有 Store。
+ * Store 的改变只能通过 Action，不能通过其他方式。也就是说 Store 不应该有公开的 Setter，所有 Setter 都应该是私有的，只能有公开的 Getter。
+ * 
+ * 
+ * Redux 与 Flux 异同点
+ * 1. redux 单一数据源：Flux 的数据源可以是多个。
+ * 2. redux State 是只读的：Flux 的 State 可以随便改。
+ * 3. redux 使用纯函数来执行修改：Flux 执行修改的不一定是纯函数。
+ * 4. Redux 和 Flux 一样都是单向数据流。
+ * 
+ * Vuex
+ * 1. State Vuex 使用单一状态树——是的，用一个对象就包含了全部的应用层级状态，将所需要的数据写放这里，类似于data。
+ * 2. Getter 有时候我们需要从 store 中的 state 中派生出一些状态，使用Getter，类似于computed。
+ * 3. Mutation 更改 Vuex 的 store 中的状态的唯一方法，类似methods。(mutation 是必须同步的，这个很好理解，和之前的  reducer 类似，不同步修改的话，会很难调试，不知道改变什么时候发生，也很难确定先后顺序)
+ * 4. Action Action 提交的是 mutation，而不是直接变更状态，可以包含任意异步操作，这里主要是操作异步操作的，使用起来几乎和mutations方法一模一样,类似methods。
+ * 5. Module 当应用变得非常复杂时，store 对象就有可能变得相当臃肿。Vuex 允许我们将 store 分割成模块（module）。每个模块拥有自己的 state、mutation、action、getter、甚至是嵌套子模块。
+ * 
+ * Redux： view——>actions——>reducer——>state变化——>view变化（同步异步一样）
+ * Vuex： view——>commit——>mutations——>state变化——>view变化（同步操作） view——>dispatch——>actions——>mutations——>state变化——>view变化（异步操作）
+ */
 
-			 /**
-				* Mobx
-				* 目前Mobx（3.x)和Vue（2.x)采用了相同的响应式原理: 为每个组件创建一个Watcher，在数据的getter和setter上加钩子，
-				* 当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。
-				* 当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。
-				*
-				* 在Mobx中，需要把数据声明为observable。
-				* 在Mobx中，数组并不是一个Array，而是一个类Array的对象，这是为了能监听到数据下标的赋值。相对的，在Vue中数组是一个Array，但是数组下标赋值要使用splice来进行，否则无法被检测到。
-			  */
-				
-			/**
-			 * react this.props.children： 表示组件的所有子节点
-			 * 可能值：1. 当前组件没有子节点，为 undefined 2.  若只有一个子节点，类型为 Object  3. 若有多个子节点，类型为 Array
-			 * 
-			 * React.Children 这个API我们虽然使用的比较少, 但是我们通过这个API可以操作children： React.Children.map(this.props.children, c => [[c, c]])
-			 * 
-			 * React.cloneElement(element,[props],[...children])
-			 * 
-			 * const {children} = this.props,
-			 * newChildren = React.Children.map(children, child =>
-			 * 	 React.cloneElement(
-			 * 	 child,
-			 * 	 { onChange: e => alert(e.target.value) }
-			 * ));
-			 */
+/**
+ * Mobx
+ * 目前Mobx（3.x)和Vue（2.x)采用了相同的响应式原理: 为每个组件创建一个Watcher，在数据的getter和setter上加钩子，
+ * 当组件渲染的时候（例如，调用render方法）会触发getter，然后把这个组件对应的Watcher添加到getter相关的数据的依赖中（例如，一个Set）。
+ * 当setter被触发时，就能知道数据发生了变化，然后同时对应的Watcher去重绘组件。
+ *
+ * 在Mobx中，需要把数据声明为observable。
+ * 在Mobx中，数组并不是一个Array，而是一个类Array的对象，这是为了能监听到数据下标的赋值。相对的，在Vue中数组是一个Array，但是数组下标赋值要使用splice来进行，否则无法被检测到。
+ */
 
-			 /**
+/**
+ * react this.props.children： 表示组件的所有子节点
+ * 可能值：1. 当前组件没有子节点，为 undefined 2.  若只有一个子节点，类型为 Object  3. 若有多个子节点，类型为 Array
+ * 
+ * React.Children 这个API我们虽然使用的比较少, 但是我们通过这个API可以操作children： React.Children.map(this.props.children, c => [[c, c]])
+ * 
+ * React.cloneElement(element,[props],[...children])
+ * 
+ * const {children} = this.props,
+ * newChildren = React.Children.map(children, child =>
+ * 	 React.cloneElement(
+ * 	 child,
+ * 	 { onChange: e => alert(e.target.value) }
+ * ));
+ */
+
+/**
 				* Vue与React对比
 				* 1. Vue 进行数据拦截/代理，它对侦测数据的变化更敏感、更精确，也间接对一些后续实现（比如 hooks，function based API）提供了很大的便利。
 				* 2. React setState 引起局部重新刷新。为了达到更好的性能，React 暴漏给开发者 shouldComponentUpdate 这个生命周期 hook. Vue 由于采用依赖追踪，默认就是优化状态：你动了多少数据，就触发多少更新，不多也不少，而 React 对数据变化毫无感知，它就提供 React.createElement 调用已生成 virtual dom.
@@ -643,87 +659,205 @@ Function.prototype.myBind = function (newThis, ...rest) {
 				* Vue 向上扩展就是 React，Vue 向下兼容后就类似于 jQuery，渐进式有时候比革命性更符合时代的要求。
 			  */
 
-				/**
-				 * React hook 底层是基于链表（Array）实现，每次组件被 render 的时候都会顺序执行所有的 hooks，
-				 * 因为底层是链表，每一个 hook 的 next 是指向下一个 hook 的，所以要求开发者不能在不同 hooks 调用中使用判断条件，因为 if 会导致顺序不正确，从而导致报错。
-				 * 
-				 * vue hook 只会被注册调用一次，vue 之所以能避开这些麻烦的问题，根本原因在于它对数据的响应是基于响应式的，是对数据进行了代理的。他不需要链表进行 hooks 记录，它对数据直接代理观察。
-				 * 但是 Vue 这种响应式的方案，也有自己的困扰。在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。
-				 * vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截。这算是因为设计理念带来的一个非常非常微小的 side effect。
-				 */
+/**
+ * React hook 底层是基于链表（Array）实现，每次组件被 render 的时候都会顺序执行所有的 hooks，
+ * 因为底层是链表，每一个 hook 的 next 是指向下一个 hook 的，所以要求开发者不能在不同 hooks 调用中使用判断条件，因为 if 会导致顺序不正确，从而导致报错。
+ * 
+ * vue hook 只会被注册调用一次，vue 之所以能避开这些麻烦的问题，根本原因在于它对数据的响应是基于响应式的，是对数据进行了代理的。他不需要链表进行 hooks 记录，它对数据直接代理观察。
+ * 但是 Vue 这种响应式的方案，也有自己的困扰。在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。
+ * vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截。这算是因为设计理念带来的一个非常非常微小的 side effect。
+ */
 
-				 /**
-					* React 为了弥补不必要的更新，会对 setState 的行为进行合并操作。因此 setState 有时候会是异步更新，但并不是总是“异步”
-					* 1. 在组件生命周期中或者react事件绑定中，setState是通过异步更新的。 
-					* 2. 在延时的回调或者原生事件绑定的回调中调用setState不一定是异步的。
-					*
-					* 调用setState发生了什么？
-					* 1. 当调用setState时，实际上会执行enqueueSetState方法，并对partialState以及_pendingStateQueue更新队列进行合并，最终通过enqueueUpdate执行state更新
-					* 2. 如果组件当前正处于update事务中，则先将Component存入dirtyComponent中。否则调用batchedUpdates处理。
-					* 
-					* 在代码中调用setState函数之后，React 会将传入的参数对象与组件当前的状态合并，然后触发所谓的调和过程（Reconciliation）。 
-					* 经过调和过程，React 会以相对高效的方式根据新的状态构建 React 元素树并且着手重新渲染整个UI界面。 
-					* 在 React 得到元素树之后，React 会自动计算出新的树与老树的节点差异，然后根据差异对界面进行最小化重渲染。 
-					* 在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。
-				  */
+/**
+ * React 为了弥补不必要的更新，会对 setState 的行为进行合并操作。因此 setState 有时候会是异步更新，但并不是总是“异步”
+ * 1. 在组件生命周期中或者react事件绑定中，setState是通过异步更新的。 
+ * 2. 在延时的回调或者原生事件绑定的回调中调用setState不一定是异步的。
+ *
+ * 调用setState发生了什么？
+ * 1. 当调用setState时，实际上会执行enqueueSetState方法，并对partialState以及_pendingStateQueue更新队列进行合并，最终通过enqueueUpdate执行state更新
+ * 2. 如果组件当前正处于update事务中，则先将Component存入dirtyComponent中。否则调用batchedUpdates处理。
+ * 
+ * 在代码中调用setState函数之后，React 会将传入的参数对象与组件当前的状态合并，然后触发所谓的调和过程（Reconciliation）。 
+ * 经过调和过程，React 会以相对高效的方式根据新的状态构建 React 元素树并且着手重新渲染整个UI界面。 
+ * 在 React 得到元素树之后，React 会自动计算出新的树与老树的节点差异，然后根据差异对界面进行最小化重渲染。 
+ * 在差异计算算法中，React 能够相对精确地知道哪些位置发生了改变以及应该如何改变，这就保证了按需更新，而不是全部重新渲染。
+ */
 
-					/**
-					 * React Diff
-					 * 传统 diff 算法 通过循环递归对节点进行依次对比。：效率低下，算法复杂度达到 O(n^3)。 React Diff算法将 O(n^3) 复杂度的问题转换成 O(n) 复杂度的问题。
-					 * 
-					 * 与传统diff多了三个优化点
-					 * 1. tree diff： 对树进行分层比较，两棵树只会对同一层次的节点进行比较。
-					 * 2. Component Diff：相同类生成相似树形结构，不同类生成不同树形结构 1. 同一类型的组件，按照原策略继续比较 virtual DOM tree。 2. 如果不是，则将该组件判断为 dirty component，从而替换整个组件下的所有子节点;即使这个这两个不同类型的组件中子节点都相同未改变，也是直接全部更新掉。因为不同类型的 component 是很少存在相似 DOM tree 的机会。
-					 * 3. Element Diff： 允许开发者对同一层级的同组子节点，添加唯一 key 进行区分，新老集合进行 diff 差异化对比，通过 key 发现新老集合中的节点都是相同的节点，因此无需进行节点删除和创建，只需要将老集合中节点的位置进行移动，更新为新集合中节点的位置。
-					 * 
-					 * 
-					 * 
-					 * Fiber（JavaScript运行时间过长，就会阻塞这些其他工作，可能导致掉帧）
-					 * Fiber解决这个问题的思路是增量更新。把渲染/更新过程（递归diff）拆分成一系列小任务，每次检查树上的一小部分，
-					 * 做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
-					 * 
-					 * React 中调用 render() 和 setState() 方法进行渲染和更新时，主要包含两个阶段：
-					 * 1. 调度阶段(Reconciler)： Fiber 之前的 reconciler（被称为 Stack reconciler）是自顶向下的递归算法，遍历新数据生成新的Virtual DOM，通过 Diff 算法，找出需要更新的元素，放到更新队列中去。
-					 * 2. 渲染阶段(Renderer)： 根据所在的渲染环境，遍历更新队列，调用渲染宿主环境的 API, 将对应元素更新渲染。在浏览器中，就是更新对应的DOM元素，除浏览器外，渲染环境还可以是 Native、WebGL 等等。
-					 * 
-					 * Fiber 改进思路是将调度阶段拆分成一系列小任务，每次加入一个节点至任务中，做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
-					 * 每次只做一小段，做完一段就把时间控制权交还给主线程，而不像之前长时间占用，从而实现对任务的暂停、恢复、复用灵活控制，这样主线程上的用户交互及动画可以快速响应，从而解决卡顿的问题。
-					 * 背后支持 API 是 requestIdleCallback；其作用是会在浏览器空闲时期依次调用函数， 这就可以在主事件循环中执行后台或低优先级的任务
-					 * 
-					 * Fiber对生命周期的影响
-					 * reconciliation阶段：componentWillMount componentWillReceiveProps shouldComponentUpdate componentWillUpdate
-					 * commit阶段：componentDidMount componentDidUpdate componentWillUnmount
-					 * 
-					 * 在reconciliation阶段，生命周期函数会被多次调用，开发者慎重调用这个阶段的生命周期。
-					 * 16.3+版本：警告componentWillMount，componentWillReceiveProps和componentWillUpdate即将废弃。
-					 * 17.0版本：正式废弃componentWillMount，componentWillReceiveProps和componentWillUpdate，这个阶段只有新的带UNSAFE_前缀的3个函数能用，旧的不会再触发。
-					 * 
-					 * getDerivedStateFromProps: 是一个静态方法，主要取代componentWillReceiveProps。
-					 * getSnapshotBeforeUpdate: 会在 render 之后执行，而执行之时 DOM 元素还没有被更新，给了一个机会去获取 DOM 信息，计算得到一个 snapshot。
-					 */
+/**
+ * React Diff
+ * 传统 diff 算法 通过循环递归对节点进行依次对比。：效率低下，算法复杂度达到 O(n^3)。 React Diff算法将 O(n^3) 复杂度的问题转换成 O(n) 复杂度的问题。
+ * 
+ * 与传统diff多了三个优化点
+ * 1. tree diff： 对树进行分层比较，两棵树只会对同一层次的节点进行比较。
+ * 2. Component Diff：相同类生成相似树形结构，不同类生成不同树形结构 
+ *   1. 同一类型的组件，按照原策略继续比较 virtual DOM tree。 
+ *   2. 如果不是，则将该组件判断为 dirty component，从而替换整个组件下的所有子节点;即使这个这两个不同类型的组件中子节点都相同未改变，也是直接全部更新掉。因为不同类型的 component 是很少存在相似 DOM tree 的机会。
+ * 3. Element Diff： 允许开发者对同一层级的同组子节点，添加唯一 key 进行区分，新老集合进行 diff 差异化对比，通过 key 发现新老集合中的节点都是相同的节点，因此无需进行节点删除和创建，只需要将老集合中节点的位置进行移动，更新为新集合中节点的位置。
+ * 
+ * 
+ * 
+ * Fiber（JavaScript运行时间过长，就会阻塞这些其他工作，可能导致掉帧）
+ * Fiber解决这个问题的思路是增量更新。把渲染/更新过程（递归diff）拆分成一系列小任务，每次检查树上的一小部分，
+ * 做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
+ * 
+ * React 中调用 render() 和 setState() 方法进行渲染和更新时，主要包含两个阶段：
+ * 1. 调度阶段(Reconciler)： Fiber 之前的 reconciler（被称为 Stack reconciler）是自顶向下的递归算法，遍历新数据生成新的Virtual DOM，通过 Diff 算法，找出需要更新的元素，放到更新队列中去。
+ * 2. 渲染阶段(Renderer)： 根据所在的渲染环境，遍历更新队列，调用渲染宿主环境的 API, 将对应元素更新渲染。在浏览器中，就是更新对应的DOM元素，除浏览器外，渲染环境还可以是 Native、WebGL 等等。
+ * 
+ * Fiber 改进思路是将调度阶段拆分成一系列小任务，每次加入一个节点至任务中，做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
+ * 每次只做一小段，做完一段就把时间控制权交还给主线程，而不像之前长时间占用，从而实现对任务的暂停、恢复、复用灵活控制，这样主线程上的用户交互及动画可以快速响应，从而解决卡顿的问题。
+ * 背后支持 API 是 requestIdleCallback；其作用是会在浏览器空闲时期依次调用函数， 这就可以在主事件循环中执行后台或低优先级的任务
+ * 
+ * Fiber对生命周期的影响
+ * reconciliation阶段：componentWillMount componentWillReceiveProps shouldComponentUpdate componentWillUpdate
+ * commit阶段：componentDidMount componentDidUpdate componentWillUnmount
+ * 
+ * 在reconciliation阶段，生命周期函数会被多次调用，开发者慎重调用这个阶段的生命周期。
+ * 16.3+版本：警告componentWillMount，componentWillReceiveProps和componentWillUpdate即将废弃。
+ * 17.0版本：正式废弃componentWillMount，componentWillReceiveProps和componentWillUpdate，这个阶段只有新的带UNSAFE_前缀的3个函数能用，旧的不会再触发。
+ * 
+ * getDerivedStateFromProps: 是一个静态方法，主要取代componentWillReceiveProps。
+ * getSnapshotBeforeUpdate: 会在 render 之后执行，而执行之时 DOM 元素还没有被更新，给了一个机会去获取 DOM 信息，计算得到一个 snapshot。
+ */
 
-					/**
-					 * 什么是函数式编程
-					 * 1. 不可变性(Immutability)：函数式编程中，你无法更改数据，也不能更改。 如果要改变或更改数据，则必须复制数据副本来更改。
-					 * 2. 纯函数(Pure Functions)：纯函数是始终接受一个或多个参数并计算参数并返回数据或函数的函数。 它没有副作用，例如设置全局状态，更改应用程序状态，它总是将参数视为不可变数据。
-					 * 3. 高阶函数 (Higher-Order Functions)
-					 * 4. 组合：在React中，我们将功能划分为小型可重用的纯函数，我们必须将所有这些可重用的函数放在一起，最终使其成为产品。
-					 */
-					
+/**
+ * 什么是函数式编程
+ * 1. 不可变性(Immutability)：函数式编程中，你无法更改数据，也不能更改。 如果要改变或更改数据，则必须复制数据副本来更改。
+ * 2. 纯函数(Pure Functions)：纯函数是始终接受一个或多个参数并计算参数并返回数据或函数的函数。 它没有副作用，例如设置全局状态，更改应用程序状态，它总是将参数视为不可变数据。
+ * 3. 高阶函数 (Higher-Order Functions)
+ * 4. 组合：在React中，我们将功能划分为小型可重用的纯函数，我们必须将所有这些可重用的函数放在一起，最终使其成为产品。
+ */
 
-					/**
-					 * git-flow 流程
-					 * 主要分支： 1. master: 永远处在即将发布(production-ready)状态 2. develop: 最新的开发状态
-					 * 辅助分支： 1. feature: 开发新功能的分支, 基于 develop, 完成后 merge 回 develop； 2.准备要发布版本的分支, 用来修复 bug. 基于 develop, 完成后 merge 回 develop 和 master
-					 * 					3. hotfix: 修复 master 上的问题, 等不及 release 版本就必须马上上线. 基于 master, 完成后 merge 回 master 和 develop；
-					 * 
-					 * rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。
-					 * 如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase develop 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。
-					 * 
-					 */
 
-					/**
-					 * Code-Splitting 部分，提出拆分组件的最佳方式（best way） 是使用动态的 import 方式。
-					 * React.lazy 和 suspense 并不适用于服务端渲染。
-					 * 
-					 */
+/**
+ * git-flow 流程
+ * 主要分支： 1. master: 永远处在即将发布(production-ready)状态 2. develop: 最新的开发状态
+ * 辅助分支： 1. feature: 开发新功能的分支, 基于 develop, 完成后 merge 回 develop； 2.准备要发布版本的分支, 用来修复 bug. 基于 develop, 完成后 merge 回 develop 和 master
+ * 					3. hotfix: 修复 master 上的问题, 等不及 release 版本就必须马上上线. 基于 master, 完成后 merge 回 master 和 develop；
+ * 
+ * rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。
+ * 如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase develop 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。
+ * 
+ */
+
+/**
+ * Code-Splitting 部分，提出拆分组件的最佳方式（best way） 是使用动态的 import 方式。
+ * React.lazy 和 suspense 并不适用于服务端渲染。
+ * React.lazy(()=>{}) 这个方法的回调中其实就是包含了一个动态 import,如果直接使用 React.lazy，会报错误：需要一个 placeholder ui；
+ * 既然是延迟加载，就一定会有一个loading的过程，而 Suspense 正是完成这个过程。
+ * Suspense 使用的时候，fallback 一定是存在且有内容的， 否则会报错。
+ * 
+ * Suspense 中 fallback 最好是一个错误边界组件， 错误边界可以在任何一个组件中进行错误的捕获。
+ * 错误边界组件中，通过 componentDidCatch 捕获错误，可以设置信息或发错误日志。
+ */
+
+/**
+ * react hooks（16.7）
+ * 最首要的特点：它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。
+ * 就是拓展函数式组件的边界。结果也很清晰，只要Class 组件能实现的，函数式组件+Hooks都能胜任。
+ * 
+ * 可以解决的问题：
+ * 	1. 状态逻辑的复用，之前我主要采用高阶组件+继承，虽然也能解决，但hooks似乎有更优雅的方案。
+ * 	2. 复杂组件变得难以理解，这个也确实是平常中遇到的问题，一个组件写着写着状态越来越多，抽成子组件吧props跟state又传来传去。
+ * 
+ * useState、useEffect
+ * 1. useState: 执行后，返回一个数组，第一个值为状态值，第二个值为更新此状态值的对应方法。useState函数入参为state初始值。
+ * 	  const [page, setPage] = useState(1); // 初始页码为: 1
+ * 
+ * 2. useEffect：执行副作用操作。第一个参数为副作用方法，第二个参数是一个数组，填写副作用依赖项。当依赖项变了时，副作用方法才会执行。若为空数组，则只执行一次。
+ * 如不填写，则每次render都会触发。可以把useEffect看作是生命周期函数的一个集合，其中的回调函数会在render执行之后在调用，确保不会阻止浏览器的渲染，
+ * 这跟componentDidMount和componentDidUpdate是不一样的，他们会在渲染之后同步执行。
+ * useEffect(() => {
+ *  fetchList({ page }).then(setList);
+ * }, [page]); // 当page变更时，触发effect
+ * 
+ * 3. useLayoutEffect: 在大多数情况下，我们都可以使用useEffect处理副作用，但是，如果副作用是跟DOM相关的，就需要使用useLayoutEffect。useLayoutEffect中的副作用会在DOM更新之后同步执行。
+ * 
+ * 4. useRef: 1. DOM操作（与render props 用法类似）,useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传递的参数（initialValue）。返回的对象将存留在整个组件的生命周期中。
+ * 			  2. 实例化字段，方便保留任何可变值
+ * 5. useCallback: 1. useEffect里面要执行外部封装的方法时，外部封装的方法必需要用useCallback包裹一层，第二个参数为对该状态值的监听。
+ * 				   2. useCallback返回的是一个函数，该函数中有对状态值的监听，实际上可以理解成一个有函数返回值的useEffect。
+ * 
+ * useState与useEffect的正确使用姿势
+ * 1. 只要是通过useState获取的state，每一次render，都是新的值。 useState返回的状态更新方法，只是让下一次render时的state能获取到当前最新的值。而不是保持一个引用、更新那个引用值。
+ * 		我们过去class组件中的state是完全不一样的。在class组件中，state一直是挂载在当前实例下，保持着同一个引用。而在函数式组件中，根本没有this。
+ * 2. 其实并非是设置依赖项后，依赖变更会触发effect。而是effect本应该每次render都触发，但因为effect内部依赖了外部数据，外部数据不变则内部effect执行无意义。
+ * 		因此只有当外部数据变更时，effect才会重新触发。
+ * 3. useState返回的setState还有一个小弊端。如果页面状态较多，在某些异步行为（请求、定时器等）的回调中的setState是不会合并更新的（具体可自行研究react状态更新事务机制）。
+ * 		那分散的setState会带来多次render，这必然不是我们想看到的。
+ * 		解决办法就是 useReducer ，其执行后返回 [state, dispatch] ，基本类似redux中的reducer。其中state是复杂状态的合集，dispatch触发reducer后，返回一个全新的状态值。
+ * 
+ * useCallback 的作用在于利用 memoize 减少无效的 re-render，来达到性能优化的作用。
+ * 因为在函数式组件里没有了 this 来存放一些实例的变量，所以 React 建议使用 useRef 来存放一些会发生变化的值，useRef 并不再单单是为了 DOM 的 ref 准备的，同时也会用来存放组件实例的属性。
+ * 
+ * Rules of Hooks
+ * 1. “Only Call Hooks at the Top Level”，只能在函数组件的最顶层使用hooks，而不能再for循环、if等语句下面使用hooks.
+ * React Hooks 并不是通过 Proxy 或者 getters 实现的（具体可以看这篇文章 React hooks: not magic, just arrays），而是通过数组实现的，
+ * 每次 useState 都会改变下标，如果 useState被包裹在 condition 中，那每次执行的下标就可能对不上，导致 useState 导出的 setter 更新错数据。
+ * 2. 只能在函数组件中使用hooks
+ * 
+ * useEffect怎么解绑一些副作用(副作用函数中return一个函数)
+ * 这种解绑的模式跟componentWillUnmount不一样。componentWillUnmount只会在组件被销毁前执行一次而已，而useEffect里的函数，每次组件渲染后都会执行一遍，
+ * 包括副作用函数返回的这个清理函数也会重新执行一遍。
+ */
+
+// 第二次渲染时，fisetRender为false，导致values[]、setters[]与第一次渲染的values[]、setters[]不一致
+// 会发现本来要改变lastName的，结果nickName被修改了
+let firstRender = true;
+function RenderFunctionComponent() {
+    // 向values[]插入firstName，setters[]数组插入setFirstName
+    const [firstName, setFirstName] = useState("Kawhi");
+    if (firstRender) {
+        firstRender = false;
+        // 向values[]插入lastName，setters[]数组插入setLastName
+        const [lastName, setLastName] = useState("Leonard");
+    }
+    // 向values[]插入nickName，setters[]数组插入setNickName      
+    const [nickName, setNickName] = useState("Kawhi");
+
+    return (
+        <button onClick={() => setLastName("K.Jordan")}>
+            Change lastName
+        </button>
+    );
+}
+
+ // 自定义Hooks
+function useInputValue(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) =>  {
+    setValue(event.currentTarget.value);
+  };
+
+  return {
+    value,
+    onChange
+  };
+}
+function Demo(props){
+   const name = useInputValue('sss') 
+    return (
+        <input {...name} />
+    ) 
+}
+
+/**
+ * 16.3：createRef、createContext
+ * 
+ * 16.6: memo、lazy、Suspense
+ * React.memo的实现类似React.PureComponent，所以它内部是对对象进行浅比较。 React.memo允许你自定义比较方法
+ */
+
+ /**
+  * RenderProps 与 Hoc 都是为了解决复用逻辑、不污染底层的组件设计模式
+  *
+  * Hoc: 1. 缺点：复杂设计时可能会形成多次嵌套高阶组件，很难确保每个高阶组件属性名不同，所以属性容易覆盖。而且高阶组件犹如一个黑盒，你要使用必须先去看懂它的实现。
+  * 	 2. 优点：可以使用 compose 方法合并多个高阶组件然后在使用。 可以使用装饰器直接调用。
+  * 
+  * renderProps: 1. 缺点：嵌套过深也会形成 地狱回调。
+  * 			 2. 优点：比Hoc更简单明了。
+  * 
+  * renderProps的写法：
+  * 1. 通过props.children 传递的一个接受props参数的渲染函数
+  * 2. 通过正常的props传递一个render函数props
+  */ 
