@@ -339,6 +339,12 @@ ws.onmessage = function (event) {
  *  2. 函数节流：在高频率事件(resize,scroll等)中，为了防止在一个刷新间隔内发生多次函数执行，使用requestAnimationFrame可保证每个刷新间隔内，函数只被执行一次，这样既能保证流畅性，也能更好的节省函数执行的开销。
  */
 
+ /**
+  * requestIdleCallback
+  * requestAnimationFrame 每一帧必定会执行不同，requestIdleCallback 是捡浏览器空闲来执行任务。
+  * 
+  */
+
 
 // 手写一个快速排序
 
@@ -648,16 +654,16 @@ function myInstanceof(L, R) {
  */
 
 /**
-				* Vue与React对比
-				* 1. Vue 进行数据拦截/代理，它对侦测数据的变化更敏感、更精确，也间接对一些后续实现（比如 hooks，function based API）提供了很大的便利。
-				* 2. React setState 引起局部重新刷新。为了达到更好的性能，React 暴漏给开发者 shouldComponentUpdate 这个生命周期 hook. Vue 由于采用依赖追踪，默认就是优化状态：你动了多少数据，就触发多少更新，不多也不少，而 React 对数据变化毫无感知，它就提供 React.createElement 调用已生成 virtual dom.
-				* 3. 在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。。因此 Vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截.
-				* 4. Mobx 在 React 社区很流行，Mobx 采用了响应式的思想，实际上 Vue 也采用了几乎相同的反应系统。.React + Mobx 也可以被认为是更繁琐的 Vue。
-				* 5. Vue template 对比 JSX: 这只是「解决同一个问题的不同实现思路」，完全可以由开发者的个人偏好来决定。退一步讲，Vue 中也不是不可以使用 JSX；同样，JSX 也不是无法实现 Vue template 的特性，比如模版指令
-				* 6. Vue 和 React 实现复用: Vue 和 React 都是经历了：Mixin -> Hoc（Vue 比较少用，模版套模版，有点奇怪了）-> render prop（Vue 有类似思想的实现为 slot） -> hooks（Vue3.0 function based API）
-
-				* Vue 向上扩展就是 React，Vue 向下兼容后就类似于 jQuery，渐进式有时候比革命性更符合时代的要求。
-			  */
+* Vue与React对比
+* 1. Vue 进行数据拦截/代理，它对侦测数据的变化更敏感、更精确，也间接对一些后续实现（比如 hooks，function based API）提供了很大的便利。
+* 2. React setState 引起局部重新刷新。为了达到更好的性能，React 暴漏给开发者 shouldComponentUpdate 这个生命周期 hook. Vue 由于采用依赖追踪，默认就是优化状态：你动了多少数据，就触发多少更新，不多也不少，而 React 对数据变化毫无感知，它就提供 React.createElement 调用已生成 virtual dom.
+* 3. 在 JavaScript 中，原始值类型如 string 和 number 是只有值，没有引用的。不管是使用 Object.defineProperty 还是 Proxy，我们无法追踪原始变量后续的变化。。因此 Vue 不得不返回一个包装对象，不然对于基本类型，它无法做到数据的代理和拦截.
+* 4. Mobx 在 React 社区很流行，Mobx 采用了响应式的思想，实际上 Vue 也采用了几乎相同的反应系统。.React + Mobx 也可以被认为是更繁琐的 Vue。
+* 5. Vue template 对比 JSX: 这只是「解决同一个问题的不同实现思路」，完全可以由开发者的个人偏好来决定。退一步讲，Vue 中也不是不可以使用 JSX；同样，JSX 也不是无法实现 Vue template 的特性，比如模版指令
+* 6. Vue 和 React 实现复用: Vue 和 React 都是经历了：Mixin -> Hoc（Vue 比较少用，模版套模版，有点奇怪了）-> render prop（Vue 有类似思想的实现为 slot） -> hooks（Vue3.0 function based API）
+*
+* Vue 向上扩展就是 React，Vue 向下兼容后就类似于 jQuery，渐进式有时候比革命性更符合时代的要求。
+*/
 
 /**
  * React hook 底层是基于链表（Array）实现，每次组件被 render 的时候都会顺序执行所有的 hooks，
@@ -706,6 +712,7 @@ function myInstanceof(L, R) {
  * 
  * Fiber 改进思路是将调度阶段拆分成一系列小任务，每次加入一个节点至任务中，做完看是否还有时间继续下一个任务，有的话继续，没有的话把自己挂起，主线程不忙的时候再继续。
  * 每次只做一小段，做完一段就把时间控制权交还给主线程，而不像之前长时间占用，从而实现对任务的暂停、恢复、复用灵活控制，这样主线程上的用户交互及动画可以快速响应，从而解决卡顿的问题。
+ * 
  * 背后支持 API 是 requestIdleCallback；其作用是会在浏览器空闲时期依次调用函数， 这就可以在主事件循环中执行后台或低优先级的任务
  * 
  * Fiber对生命周期的影响
@@ -736,7 +743,8 @@ function myInstanceof(L, R) {
  * 					3. hotfix: 修复 master 上的问题, 等不及 release 版本就必须马上上线. 基于 master, 完成后 merge 回 master 和 develop；
  * 
  * rebase会把你当前分支的 commit 放到公共分支的最后面,所以叫变基。就好像你从公共分支又重新拉出来这个分支一样。
- * 如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase develop 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。
+ * 如果你从 master 拉了个feature分支出来,然后你提交了几个 commit,这个时候刚好有人把他开发的东西合并到 master 了,
+ * 这个时候 master 就比你拉分支的时候多了几个 commit,如果这个时候你 rebase develop 的话，就会把你当前的几个 commit，放到那个人 commit 的后面。
  * 
  */
 
@@ -803,42 +811,49 @@ function myInstanceof(L, R) {
 
 // 第二次渲染时，fisetRender为false，导致values[]、setters[]与第一次渲染的values[]、setters[]不一致
 // 会发现本来要改变lastName的，结果nickName被修改了
-let firstRender = true;
-function RenderFunctionComponent() {
-    // 向values[]插入firstName，setters[]数组插入setFirstName
-    const [firstName, setFirstName] = useState("Kawhi");
-    if (firstRender) {
-        firstRender = false;
-        // 向values[]插入lastName，setters[]数组插入setLastName
-        const [lastName, setLastName] = useState("Leonard");
-    }
-    // 向values[]插入nickName，setters[]数组插入setNickName      
-    const [nickName, setNickName] = useState("Kawhi");
 
-    return (
-        <button onClick={() => setLastName("K.Jordan")}>
-            Change lastName
-        </button>
-    );
-}
+// let firstRender = true;
+// function RenderFunctionComponent() {
+// 	// 向values[]插入firstName，setters[]数组插入setFirstName
+// 	const [firstName, setFirstName] = useState("Kawhi");
+// 	if (firstRender) {
+// 		firstRender = false;
+// 		// 向values[]插入lastName，setters[]数组插入setLastName
+// 		const [lastName, setLastName] = useState("Leonard");
+// 	}
+// 	// 向values[]插入nickName，setters[]数组插入setNickName      
+// 	const [nickName, setNickName] = useState("Kawhi");
 
- // 自定义Hooks
+// 	return ( <
+// 		button onClick = {
+// 			() => setLastName("K.Jordan")
+// 		} >
+// 		Change lastName <
+// 		/button>
+// 	);
+// }
+
+// 自定义Hooks
 function useInputValue(initialValue) {
-  const [value, setValue] = useState(initialValue);
-  const onChange = (event) =>  {
-    setValue(event.currentTarget.value);
-  };
+	const [value, setValue] = useState(initialValue);
+	const onChange = (event) => {
+		setValue(event.currentTarget.value);
+	};
 
-  return {
-    value,
-    onChange
-  };
+	return {
+		value,
+		onChange
+	};
 }
-function Demo(props){
-   const name = useInputValue('sss') 
-    return (
-        <input {...name} />
-    ) 
+
+function Demo(props) {
+	const name = useInputValue('sss')
+	return ( <
+		input {
+			...name
+		}
+		/>
+	)
 }
 
 /**
@@ -848,16 +863,48 @@ function Demo(props){
  * React.memo的实现类似React.PureComponent，所以它内部是对对象进行浅比较。 React.memo允许你自定义比较方法
  */
 
- /**
-  * RenderProps 与 Hoc 都是为了解决复用逻辑、不污染底层的组件设计模式
-  *
-  * Hoc: 1. 缺点：复杂设计时可能会形成多次嵌套高阶组件，很难确保每个高阶组件属性名不同，所以属性容易覆盖。而且高阶组件犹如一个黑盒，你要使用必须先去看懂它的实现。
-  * 	 2. 优点：可以使用 compose 方法合并多个高阶组件然后在使用。 可以使用装饰器直接调用。
-  * 
-  * renderProps: 1. 缺点：嵌套过深也会形成 地狱回调。
-  * 			 2. 优点：比Hoc更简单明了。
-  * 
-  * renderProps的写法：
-  * 1. 通过props.children 传递的一个接受props参数的渲染函数
-  * 2. 通过正常的props传递一个render函数props
-  */ 
+/**
+ * RenderProps 与 Hoc 都是为了解决复用逻辑、不污染底层的组件设计模式
+ *
+ * Hoc: 1. 缺点：复杂设计时可能会形成多次嵌套高阶组件，很难确保每个高阶组件属性名不同，所以属性容易覆盖。而且高阶组件犹如一个黑盒，你要使用必须先去看懂它的实现。
+ * 	 2. 优点：可以使用 compose 方法合并多个高阶组件然后在使用。 可以使用装饰器直接调用。
+ * 
+ * renderProps: 1. 缺点：嵌套过深也会形成 地狱回调。
+ * 			 2. 优点：比Hoc更简单明了。
+ * 
+ * renderProps的写法：
+ * 1. 通过props.children 传递的一个接受props参数的渲染函数
+ * 2. 通过正常的props传递一个render函数props
+ */
+
+/**
+ * tree shaking: 只打包自己使用的代码，去除无用代码
+ * 
+ * 首先源码必须遵循 ES6 的模块规范 (import & export)，如果是 CommonJS 规范 (require) 则无法使用。
+ * 基于 ES6 的静态引用，tree shaking 通过扫描所有 ES6 的 export，找出被 import 的内容并添加到最终代码中。
+ * webpack 的实现是把所有 import 标记为有使用/无使用两种，在后续压缩时进行区别处理。
+ * 
+ * webpack 4 在 package.json 新增了一个配置项叫做 sideEffects， 值为 false 表示整个包都没有副作用；或者是一个数组列出有副作用的模块。
+ * 如果 sideEffects 值为 false，当前包 export 了 5 个方法，而我们使用了 2 个，剩下 3 个也不会被打包，是符合预期的。
+ * 
+ * Webpack 只要打开了 production 模式，已经具备了 Tree-shaking 的能力。(mode: 'production')
+ * webpack 4 还支持对 JSON 的 tree-shaking
+ * 
+ */
+
+/** 
+ * hasOwnProperty: 方法返回一个布尔值，判断对象是否包含特定的自身（非继承）属性。
+ * 在看开源项目的过程中，经常会看到类似如下的源码。for...in循环对象的所有枚举属性，然后再使用hasOwnProperty()方法来忽略继承属性。
+ * 
+ * 
+ */
+
+/**
+ *  vue: 如果在实例创建之后添加新的属性到实例上，它不会触发视图更新。
+ *  当vue的data里边声明或者已经赋值过的对象或者数组（数组里边的值是对象）时，向对象中添加新的属性，如果更新此属性的值，是不会更新视图的。
+ * 
+ * 受现代 JavaScript 的限制 (以及废弃 Object.observe)，Vue 不能检测到对象属性的添加或删除。
+ * 由于 Vue 会在初始化实例时对属性执行 getter/setter 转化过程，所以属性必须在 data 对象上存在才能让 Vue 转换它，这样才能让它是响应的。
+ * Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上
+ * 还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名
+ * */
