@@ -530,75 +530,75 @@ function myInstanceof(L, R) {
  */
 
 /**
-			* redux
-			* 把所有的state集中到组件顶部，能够灵活的将所有state各取所需的分发给所有的组件.给 React 应用提供「可预测化的状态管理」机制。
-			*
-			* 组件改变state的唯一方法是通过调用store的dispatch方法，触发一个action，这个action被对应的reducer处理，于是state完成更新.
-			*	组件可以派发(dispatch)行为(action)给store,而不是直接通知其它组件.其它组件可以通过订阅store中的状态(state)来刷新自己的视图.
-			*
-			* 1. action
-			*	用户是接触不到state的，只能有view触发，这个action可以理解为指令，需要发出多少动作就有多少指令
-			* action是一个对象，必须有一个叫type的参数，定义action类型
-			*
-			* 2. reducer
-			*	使用单独的一个reducer,也可以将多个reducer合并为一个reducer，即：combineReducers();
-			* action发出命令后将state放入reucer加工函数中，返回新的state,对state进行加工处理
-			*
-			* 3. store
-			* 使用createStore创建，整个应用状态(其实也就是数据)存储到到一个地方，称为store，这个store里面保存一棵状态树(state tree)；
-			* 提供subscribe，dispatch，getState这些方法。
-			*
-			* view在redux中会派发一个action，action通过store的dispatch方法派发给store,store接收到action，
-			* 连同之前到state，一起传给reducer，reducer返回一个新到数据给store,store去改变自己到state。这是redux的一个标准流程
-			*
-			* react-redux
-			* 单纯的redux是借用了全局变量来进行管理store中的state，缺点太多。
-			* react-redux把store直接集成到React应用的顶层props里面，只要各个子组件能访问到顶层props就行了.也就是利用了context;
-			*
-			*	1. Provider
-			*	 接受Redux的store作为props，并将其声明为context的属性，这个组件的目的是让所有组件都能够访问到Redux中的数据。 
-			*
-			* 2. connect
-			*	connect(mapStateToProps, mapDispatchToProps)(MyComponent)
-			*
-			*	 1. mapStateToProps
-			*			把state映射到props中去 ,其实也就是把Redux中的数据映射到React中的props中去。
-			*	 2. mapDispatchToProps
-			*			把各种dispatch也变成了props让你可以直接使用
-			* 
-			* 中间件(中间件都是对store.dispatch()的增强)
-			*	redux的中间件指的是action和store之间。之前我们说action只能是一个对象，所以action是一个对象直接派发给了store。但是现在，当我们使用了redux-thunk之后，action可以是函数了。
-			*	const store = createStore(
-      * 	reducers, 
-      * 	applyMiddleware(thunk, logger)
-      * );
+	* redux
+	* 把所有的state集中到组件顶部，能够灵活的将所有state各取所需的分发给所有的组件.给 React 应用提供「可预测化的状态管理」机制。
+	*
+	* 组件改变state的唯一方法是通过调用store的dispatch方法，触发一个action，这个action被对应的reducer处理，于是state完成更新.
+	*	组件可以派发(dispatch)行为(action)给store,而不是直接通知其它组件.其它组件可以通过订阅store中的状态(state)来刷新自己的视图.
+	*
+	* 1. action
+	*	用户是接触不到state的，只能有view触发，这个action可以理解为指令，需要发出多少动作就有多少指令
+	* action是一个对象，必须有一个叫type的参数，定义action类型
+	*
+	* 2. reducer
+	*	使用单独的一个reducer,也可以将多个reducer合并为一个reducer，即：combineReducers();
+	* action发出命令后将state放入reucer加工函数中，返回新的state,对state进行加工处理
+	*
+	* 3. store
+	* 使用createStore创建，整个应用状态(其实也就是数据)存储到到一个地方，称为store，这个store里面保存一棵状态树(state tree)；
+	* 提供subscribe，dispatch，getState这些方法。
+	*
+	* view在redux中会派发一个action，action通过store的dispatch方法派发给store,store接收到action，
+	* 连同之前到state，一起传给reducer，reducer返回一个新到数据给store,store去改变自己到state。这是redux的一个标准流程
+	*
+	* react-redux
+	* 单纯的redux是借用了全局变量来进行管理store中的state，缺点太多。
+	* react-redux把store直接集成到React应用的顶层props里面，只要各个子组件能访问到顶层props就行了.也就是利用了context;
+	*
+	*	1. Provider
+	*	 接受Redux的store作为props，并将其声明为context的属性，这个组件的目的是让所有组件都能够访问到Redux中的数据。 
+	*
+	* 2. connect
+	*	connect(mapStateToProps, mapDispatchToProps)(MyComponent)
+	*
+	*	 1. mapStateToProps
+	*			把state映射到props中去 ,其实也就是把Redux中的数据映射到React中的props中去。
+	*	 2. mapDispatchToProps
+	*			把各种dispatch也变成了props让你可以直接使用
+	* 
+	* 中间件(中间件都是对store.dispatch()的增强)
+	*	redux的中间件指的是action和store之间。之前我们说action只能是一个对象，所以action是一个对象直接派发给了store。但是现在，当我们使用了redux-thunk之后，action可以是函数了。
+	*	const store = createStore(
+	* 	reducers, 
+	* 	applyMiddleware(thunk, logger)
+	* );
 
-			* 实际上redux中间件非常多，比如说我们说的redux-log，可以记录action每次派发的日志，那他怎么记录呢？其实也很简单，
-			* 每次调用 action的时候，都会通过dispatch把这个action传递给store，那么我可以对dispatch做一个升级，dispatch不仅仅把action传递给store，
-			* 而且在每次传递之前呢，还通过console.log把state打印出来；
-			*
-			* reducer又是一个纯函数，也就是不能再reducer中进行异步操作，往往实际中，组件中发生的action后，在进入reducer之前需要完成一个异步任务,比如发送ajax请求后拿到数据后，再进入reducer,显然原生的redux是不支持这种操作的；
-			* 
-			* redux-thunk、redux-saga
-			*	redux-thunk是把异步操作放在action里面操作。而redux-saga采用的设计思想是，单独的把一个异步逻辑拆分出来，放在一个异步文件里面管理;
-			*	redux-thunk最重要的思想，就是可以接受一个返回函数的action creator。
-			*
-			*
-			* thunk与sage的区别
-			* 1. saga 是通过 Generator 函数来创建的，意味着可以用同步的方式写异步的代码；
-			* 2. Thunks 是在 action 被创建时才调用，Sagas 在应用启动时就开始调用，监听action 并做相应处理； （通过创建 Sagas 将所有的异步操作逻辑收集在一个地方集中处理）
-			* 3. saga启动的任务可以在任何时候通过手动取消，也可以把任务和其他的 Effects 放到 race 方法里可以自动取消；
-			* 4. 实际上 redux-saga 所有的任务都通用 yield Effects 来完成。
-			* 
-			* saga的优点
-			* 1. 流程拆分更细，异步的action 以及特殊要求的action（更复杂的action）都在sagas中做统一处理，流程逻辑更清晰，模块更干净；
-			* 2. 以用同步的方式写异步代码，可以做一些async 函数做不到的事情 (无阻塞并发、取消请求)
-			* 3. 能容易地测试 Generator 里所有的业务逻辑
-			*
-			* saga的缺点
-			* 1. action 任务拆分更细，原有流程上相当于多了一个环节。对开发者的设计和抽象拆分能力更有要求，代码复杂性也有所增加。
-			* 2. 异步请求相关的问题较难调试排查;
-		  */
+	* 实际上redux中间件非常多，比如说我们说的redux-log，可以记录action每次派发的日志，那他怎么记录呢？其实也很简单，
+	* 每次调用 action的时候，都会通过dispatch把这个action传递给store，那么我可以对dispatch做一个升级，dispatch不仅仅把action传递给store，
+	* 而且在每次传递之前呢，还通过console.log把state打印出来；
+	*
+	* reducer又是一个纯函数，也就是不能再reducer中进行异步操作，往往实际中，组件中发生的action后，在进入reducer之前需要完成一个异步任务,比如发送ajax请求后拿到数据后，再进入reducer,显然原生的redux是不支持这种操作的；
+	* 
+	* redux-thunk、redux-saga
+	*	redux-thunk是把异步操作放在action里面操作。而redux-saga采用的设计思想是，单独的把一个异步逻辑拆分出来，放在一个异步文件里面管理;
+	*	redux-thunk最重要的思想，就是可以接受一个返回函数的action creator。
+	*
+	*
+	* thunk与sage的区别
+	* 1. saga 是通过 Generator 函数来创建的，意味着可以用同步的方式写异步的代码；
+	* 2. Thunks 是在 action 被创建时才调用，Sagas 在应用启动时就开始调用，监听action 并做相应处理； （通过创建 Sagas 将所有的异步操作逻辑收集在一个地方集中处理）
+	* 3. saga启动的任务可以在任何时候通过手动取消，也可以把任务和其他的 Effects 放到 race 方法里可以自动取消；
+	* 4. 实际上 redux-saga 所有的任务都通用 yield Effects 来完成。
+	* 
+	* saga的优点
+	* 1. 流程拆分更细，异步的action 以及特殊要求的action（更复杂的action）都在sagas中做统一处理，流程逻辑更清晰，模块更干净；
+	* 2. 以用同步的方式写异步代码，可以做一些async 函数做不到的事情 (无阻塞并发、取消请求)
+	* 3. 能容易地测试 Generator 里所有的业务逻辑
+	*
+	* saga的缺点
+	* 1. action 任务拆分更细，原有流程上相当于多了一个环节。对开发者的设计和抽象拆分能力更有要求，代码复杂性也有所增加。
+	* 2. 异步请求相关的问题较难调试排查;
+	*/
 
 /**
  * Flux 架构
@@ -908,3 +908,91 @@ function Demo(props) {
  * Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上
  * 还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名
  * */
+
+ /**
+  * 柯里化的这种封装函数的方式，只是一种思路，目的是同一个通用性很强，接收多个参数的函数转化为多个适用性强，接收参数单一的函数。
+  */
+
+  // bad example:  仅仅是接受部分参数，返回一个接受剩余参数的函数。
+  // 柯理化实际上在JS这种支持多参数函数的语言中讨论意义不大，柯理化还是主要是让那种只有单参函数的语言达到可以支持‘多参’的效果，
+  // 比如Haskell,它的函数都是自动柯理化的，因为事实上它只有单参函数。
+  // 在JS这样的语言，要实现一个柯理化函数，其实就是特地写一个高阶函数。
+  function curry(fn, ...args) {
+    return (..._arg) => {
+        return fn(...args, ..._arg);
+    }
+  }
+
+  const curry = (fn) => {
+    if (fn.length <= 1) return fn;
+    const generator = (args) => (args.length === fn.length ? fn(...args) : arg => generator([...args, arg]));
+    return generator([], fn.length);
+};
+
+  const curry = (fn, arr = []) => (...args) => (
+  arg => arg.length === fn.length
+    ? fn(...arg)
+    : curry(fn, arg)
+  )([...arr, ...args])
+
+  const curry = fn =>
+    (arg, args = [arg]) =>
+    (!fn.length || args.length === fn.length ? fn(...args) : newArg => curry(fn)(newArg, [...args, newArg]));
+
+  /**
+   * compose函数，会接收若干个函数作为参数，每个函数执行后的输出作为下一个函数的输出，直至最后一个函数的输出作为最终的结果。
+   * 一般都是从右往左执行，如果想要从左往右执行那就是pipe函数了。
+   */
+  
+  /**
+   * 套接字
+   * 传输层实现端到端的通信，因此，每一个传输层连接有两个端点。
+   * 那么，传输层连接的端点是什么呢？不是主机，不是主机的IP地址，不是应用进程，也不是传输层的协议端口。传输层连接的端点叫做套接字（socket）。
+   * 端口号拼接到IP地址就构成了套接字。所谓套接字，实际上是一个通信端点，每个套接字都有一个套接字序号，包括主机的IP地址与一个16位的主机端口号，即形如（主机IP地址：端口号  210.37.145.1：23）。
+   * 每一个传输层连接唯一地被通信两端的两个端点（即两个套接字）所确定。
+   * 
+   * TCP/IP的核心内容被封装在操作系统中，如果应用程序要使用TCP/IP，可以通过系统提供的TCP/IP的编程接口来实现。在Windows环境下，网络应用程序编程接口称作Windows Socket。
+   * 为了支持用户开发面向应用的通信程序，大部分系统都提供了一组基于TCP或者UDP的应用程序编程接口（API），该接口通常以一组函数的形式出现，也称为套接字（Socket）。
+   * 
+   */
+
+   /**
+    * Function.length 是函数对象的一个属性值，指该函数有多少个必须要传入的参数，那些已定义了默认值的参数不算在内.
+    * 函数内部：arguments.length 是函数被调用时实际传参的个数。
+    */
+
+
+   /**
+    * 编译模式分为两类：JIT 和 AOT
+    * 
+    * JIT全称 Just In Time(即时编译），典型的例子就是 v8，它可以即时编译并运行 JavaScript。所以你只需要输入源代码字符串，v8就可以帮你编译并运行代码。
+    * 通常来说，支持 JIT的语言一般能够支持自省函数（eval），在运行时动态地执行代码。 JIT模式的优势是显而易见的，可以动态下发和执行代码，
+    * 而不用管用户的机器是什么架构，为应用的用户提供丰富而动态地内容。 
+    * JIT的劣势也是显而易见的，大量字符串的代码很容易让 JIT编译器花费很多时间和内存进行编译，给用户带来的直接感受就是应用启动慢。
+    * 
+    * AOT全称 Ahead Of Time（事前编译），典型的例子就是 C/C++，LLVM或 GCC通过编译并生成 C/C++的二进制代码，
+    * 然后这些二进制通过用户安装并取得执行权限后才可以通过进程加载执行。
+    * AOT的优势也是显而易见的，事先编译好的二进制代码，加载和执行的速度都会非常快。
+    * AOT的劣势也是显而易见的，编译需要区分用户机器的架构，生成不同架构的二进制代码，
+    * 除了架构，二进制代码本身也会让用户下载的安装包比较大。二进制代码一般需要取得执行权限才可以执行，所以无法在权限比较严格的系统中进行动态更新（如 iOS）。
+    * 
+    * Flutter编译出的产物到底是什么玩意，有时候分为几个文件，有时候是一个动态库，真的叫人摸不着头脑。 
+    * 
+    * Flutter使用 Dart作为编程语言，自然其编译模式也脱离不了 Dart的干系。首先我们需要了解一下 Dart所支持的编译模式。
+    * 1. Script：最普通的 JIT模式，在 PC命令行调用 dart vm执行 dart源代码文件即是这种模式。
+    * 2. Script Snapshot：JIT模式，和上一个不同的是，这里载入的是已经 token化的 dart源代码，提前执行了上一步的 lexer步骤。
+    * 3. Application Snapshot：JIT模式，这种模式来源于 dart vm直接载入源码后 dump出数据。dart vm通过这种数据启动会更快.
+    *    不过值得一提的是这种模式是区分架构的，在 x64上生成的数据不可以给 arm使用。
+    * 4. AOT：AOT模式，直接将 dart源码编译出 .S文件，然后通过汇编器生成对应架构的代码。
+    * 
+    * src: https://www.itcodemonkey.com/article/7077.html
+    */ 
+
+    /**
+     * Serverless架构:快速构建业务及上线，按需使用，按实际用量付费，自动扩展，降低运维成本。
+     * Serverless从物理机或虚拟机的使用上进行了分离，更关注上层业务的运行情况。Serverless架构包含两块：函数即服务和后端即服务。
+     * 函数即服务提供的是计算能力。原有的计算能力，无论是容器也好，虚拟机也好都承载在一定的操作系统之上，函数即服务把计算能力进行了进一步抽象，我们在后文再继续进行展开。
+     * 另外，Serverless还有后端即服务，比如对象存储，数据库应用，缓存服务，我们也可以称之为Serverless，因为这些服务也能够在云上提供开通即服务，开通即使用的能力。
+     * 在使用这些产品时同样不需要关注它的服务器是什么样的，它的服务器部署在哪里，而是服务开通就可以使用了，后面的运维工作都交给了云，所以不用感知它的最底层服务器，
+     * 因此我们也可以把它称之为Serverless。这种服务就称之为Serverless后端即服务。这两个合起来可以称为Serverless架构。 
+     */
