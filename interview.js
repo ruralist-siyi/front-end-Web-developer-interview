@@ -1033,3 +1033,90 @@ const curry = fn => (arg, args = [arg]) =>
  *		2. docker可以说是秒级、甚至毫秒级启动
  *		3. 容器可以共享资源，进程级别的隔离，轻量级
  */
+
+ /**
+  * vue-cli 配置 transpileDependencies
+  * 默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。
+  */
+
+  /**
+   * iphonex 适配
+   * 1. 首先要明白一个概念： 安全区域，也就是不受iphonex 圆角 齐刘海 底部小黑条 的影响的 可视窗口范围；
+   * 2. viewport-fit: 苹果公司为了适配 iPhoneX 对现有 viewport meta 标签的一个扩展，用于设置网页在可视窗口的布局方式;
+   *  1. 属性值： contain； 也就是默认不兼容的方式；
+   *  2. 属性值： cover： 这是适配的关键，也就是适配的模式；
+   * 3. 加了viewport-fit: cover 后，ios11 新增特性，webkit的一个 css 函数用于设定安全区域边界的距离： constant 函数；
+   *  1. safe-area-inset-left：安全区域距离左边界距离
+   *  2. safe-area-inset-right：安全区域距离右边界距离
+   *  3. safe-area-inset-top：安全区域距离顶部边界距离
+   *  4. safe-area-inset-bottom：安全区域距离底部边界距离
+   * 4. @supports: CSS3条件判断；实际之前的CSS中的“@media”就是条件判断之一；
+   * // 意思是： 如果支持（）里面的这个属性，那么就加上这些样式； （就是可以达到 非iphonex 无需改变样式）
+   * @supports (bottom: constant(safe-area-inset-bottom)) {
+   *  body {
+   *   padding-bottom: constant(safe-area-inset-bottom);
+   *  }
+   * }
+   */
+
+   /**
+    * react中是如何 预防xss 攻击的？
+    *  1. React DOM 在渲染所有输入内容之前，默认会进行转义。它可以确保在你的应用中，
+    * 永远不会注入那些并非自己明确编写的内容。所有的内容在渲染之前都被转换成了字符串。这
+    * 样可以有效地防止 XSS（cross-site-scripting, 跨站脚本）攻击。
+    * 
+    * 2. 服务端在数据入库时存在漏洞，有用户恶意存入了这样的json数据, JSON不支持 Symbol 类型
+    * const text = {
+    *   key: null
+    *   type: 'script',
+    *   props: {src: 'http://...'},
+    * }
+    * 这条数据被成功渲染，那么就是一个存在风险的第三方 script 标签入侵到了当前用户的页面，
+    * 它能做什么完全取决于它想做什么，比如获取并发送用户的 cookie、localStorage;
+    * 
+    * React 0.14 版本加入了 $$typeof
+    * 数据库是无法存储 Symbol 类型数据的，所以用户恶意存入的数据是无法带有合法的 $$typeof 字段的。
+    * 当 React 在渲染的时候加上对 $$typeof 合法性的验证即可防止恶意代码的插入。
+    * 
+    * 如果浏览器不支持 Symbols 怎么办;唉，那这种保护方案就无效了。
+    * React仍然会加上 $$typeof 字段以保证一致性，但只是设置一个数字而已 —— 0xeac7。
+    * 因为 0xeac7 看起来有点像 「React」。
+    */
+
+    /**
+     * Code Splitting 的三种方法：
+     * 1. 入口配置：entry 入口使用多个入口文件；
+     * 2. 抽取公有代码：使用 SplitChunks 抽取公有代码；(webpack 4 废弃了之前的不怎么好用的 CommonsChunk，取而代之的是 SplitChunks。)
+     * 3. 动态加载 ：动态加载一些代码。
+     */
+
+     /**
+      * vue 中路由权限控制方案（https://juejin.im/post/5b5bfd5b6fb9a04fdd7d687a#heading-12）
+      * 1. 全局路由守卫
+      * 2. 使用addRoutes动态挂载路由
+      */
+
+      /**
+       * react fiber 架构：新diff算法 链表结构为什么就比树结构优异？
+       *  主要是链表结构插入和删除的性能优异：在链表中查找第 n 个数据以及查找指定的数据的时间复杂度是 O(N) ，
+       *  但是插入和删除数据的时间复杂度是 O(1) ，因为只需要调整指针即可；
+       */
+
+       /**
+        * redux middleware： store.dispatch()的功能增强; 真正能改变store中数据的也是store.dispatch API
+        * 作用位置： dispatch action之后， 到达reducer之前；
+        * 可以干啥：日志记录、创建崩溃报告、调用异步接口或者路由等等。
+        */
+
+        /**
+         * ORM框架
+         * ORM 是「对象关系映射」的翻译，英语全称为Object Relational Mapping，它是一种程序设计技术，用于实现面向对象编程语言里不同类型系统的数据之间的转换。
+         * 从效果上说，它其实是创建了一个可在编程语言里使用的「虚拟对象数据库」。
+         * 
+         * ORM 的概念应运而生，它用来把对象模型表示的对象，映射到基于 SQL 的关系模型数据库结构中去。
+         * 
+         * ORM 技术是在对象和数据库之间提供了一条桥梁，前台的对象型数据和数据库中的关系型的数据通过这个桥梁来相互转化。
+         * 
+         * 不同的编程语言，有不同的ORM框架。例如Java，它的ORM框架就有：Hibernate，Ibatis/Mybatis等等。
+         * 在Node Web开发中，Sequelize 就是一款比较流行的 ORM 框架。
+         */
