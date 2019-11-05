@@ -21,4 +21,4 @@
 1. [一切皆组件（react中组件的种类与区别)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/react/%E4%B8%80%E3%80%81%E4%B8%80%E5%88%87%E7%9A%86%E7%BB%84%E4%BB%B6%EF%BC%88react%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E5%8C%BA%E5%88%AB%EF%BC%89.md)
 
 ### 4. 跨端开发
-1. [【Hybrid App 实战】分享首次Hybrid App开发总结]()
+1. [【Hybrid App 实战】分享首次Hybrid App开发总结](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/app/%E3%80%90Hybrid%20App%20%E5%AE%9E%E6%88%98%E3%80%91%E5%88%86%E4%BA%AB%E9%A6%96%E6%AC%A1Hybrid%20App%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93.md)
