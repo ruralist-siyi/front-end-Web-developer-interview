@@ -116,7 +116,7 @@ const Example = () => {
     return (
       <ExampleContext.Provider value={count: 1}>
       <Child />
-      </ThemeContext.Provider>
+      </ExampleContext.Provider>
   );
   }
 
