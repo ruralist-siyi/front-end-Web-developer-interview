@@ -14,7 +14,9 @@
 6. [JavaScript中的继承](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AD%E3%80%81javascript%E7%9A%84%E7%BB%A7%E6%89%BF.md)
 7. [JavaScript中的内存空间与垃圾回收机制](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B8%83%E3%80%81javascript%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6.md)
 8. [JavaScript中的变量作用域与闭包](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AB%E3%80%81javascript%E7%9A%84%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E9%97%AD%E5%8C%85.md)
-9. [Promise-异步编程的解决方案(一)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B9%9D%E3%80%81promise-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88(%E4%B8%80).md)
+9. [Iterator（遍历器）、for...of循环（包括与其他几种遍历方法的比较）]([https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%8D%81%E3%80%81Iterator%EF%BC%88%E9%81%8D%E5%8E%86%E5%99%A8%EF%BC%89%E3%80%81for...of%E5%BE%AA%E7%8E%AF%EF%BC%88%E5%8C%85%E6%8B%AC%E4%B8%8E%E5%85%B6%E4%BB%96%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%89.md](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/十、Iterator（遍历器）、for...of循环（包括与其他几种遍历方法的比较）.md))
+10. [Promise-异步编程的解决方案(一)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B9%9D%E3%80%81promise-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88(%E4%B8%80).md)
+11. [Generator 函数-异步编程方案（二）]([https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%8D%81%E4%B8%80%E3%80%81Generator%20%E5%87%BD%E6%95%B0%EF%BC%9A%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E6%96%B9%E6%A1%88%EF%BC%88%E4%BA%8C%EF%BC%89.md](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/十一、Generator 函数：异步编程方案（二）.md))
 
 ### 3. react框架总结
 
