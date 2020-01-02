@@ -1,26 +1,34 @@
-## 前端开发知识点梳理
+# 前端修炼指南
+>2020年了，重新整理了一下目录，将文章转到issue中，以后希望可以好好维护。
+## 前端基本功
 
-### 1. web基础知识
+1. [回流、重绘与合成层](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/17)
 
-1. [回流、重绘与合成层](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/browser/%E4%B8%80%E3%80%81%E5%9B%9E%E6%B5%81%E3%80%81%E9%87%8D%E7%BB%98%E4%B8%8E%E5%90%88%E6%88%90%E5%B1%82.md)
+2. [JavaScript 的七种数据类型与类型检测](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/6)
 
-### 2.  javascript基础
+3. [JavaScript中让人脑壳疼的this](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/7)
 
-1. [JavaScript 的七种数据类型与类型检测](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B8%80%E3%80%81JavaScript%20%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B.md)
-2. [JavaScript 运行机制](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/二、JavaScript%20运行机制.md)
-3. [JavaScript的执行上下文、堆栈](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B8%89%E3%80%81javascript%E7%9A%84%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E5%87%BD%E6%95%B0%E5%A0%86%E6%A0%88.md)
-4. [JavaScript中让人脑壳疼的this](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%9B%9B%E3%80%81javascript%20%E7%9A%84this%E5%85%B3%E9%94%AE%E5%AD%97.md)
-5. [JavaScript中的原型与原型链](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%BA%94%E3%80%81javascript%E7%9A%84%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE.md)
-6. [JavaScript中的继承](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AD%E3%80%81javascript%E7%9A%84%E7%BB%A7%E6%89%BF.md)
-7. [JavaScript中的内存空间与垃圾回收机制](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B8%83%E3%80%81javascript%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6.md)
-8. [JavaScript中的变量作用域与闭包](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%85%AB%E3%80%81javascript%E7%9A%84%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E9%97%AD%E5%8C%85.md)
-9. [Iterator（遍历器）、for...of循环（包括与其他几种遍历方法的比较）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%8D%81%E3%80%81Iterator%EF%BC%88%E9%81%8D%E5%8E%86%E5%99%A8%EF%BC%89%E3%80%81for...of%E5%BE%AA%E7%8E%AF%EF%BC%88%E5%8C%85%E6%8B%AC%E4%B8%8E%E5%85%B6%E4%BB%96%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%89.md)
-10. [Promise-异步编程的解决方案(一)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E4%B9%9D%E3%80%81promise-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88(%E4%B8%80).md)
-11. [Generator 函数-异步编程方案（二）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/javascript/%E5%8D%81%E4%B8%80%E3%80%81Generator%20%E5%87%BD%E6%95%B0%EF%BC%9A%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E6%96%B9%E6%A1%88%EF%BC%88%E4%BA%8C%EF%BC%89.md)
+4. [javascript的运行机制（单线程、任务队列、EventLoop、微任务、宏任务）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/8)
 
-### 3. react框架总结
+5. [javascript为什么会存在变量提升（执行上下文、执行上下文堆栈）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/9)
 
-1. [一切皆组件（react中组件的种类与区别)](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/react/%E4%B8%80%E3%80%81%E4%B8%80%E5%88%87%E7%9A%86%E7%BB%84%E4%BB%B6%EF%BC%88react%E4%B8%AD%E7%BB%84%E4%BB%B6%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E5%8C%BA%E5%88%AB%EF%BC%89.md)
+6. [继承（原型、原型链、继承的实现方式）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/10)
 
-### 4. 跨端开发
-1. [【Hybrid App 实战】分享首次Hybrid App开发总结](https://github.com/ruralist-siyi/front-end-Web-developer-interview/blob/master/app/%E3%80%90Hybrid%20App%20%E5%AE%9E%E6%88%98%E3%80%91%E5%88%86%E4%BA%AB%E9%A6%96%E6%AC%A1Hybrid%20App%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93.md)
+7. [变量作用域与闭包](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/11)
+
+8. [Iterator（遍历器）、for...of循环（包括与其他几种遍历方法的比较）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/13)
+
+9. [Promise: 异步编程的解决方案(一) ](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/12)
+
+10. [Generator：异步编程解决方案（二）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/14)
+
+11. [async 函数-异步编程的解决方案（三 ）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/15)
+
+12. [内存空间与垃圾回收机制](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/16)
+
+## react进阶
+
+1. [一次性彻底弄懂组件（函数式组件、PureComponent、React.memo、高阶组件）](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/18)
+
+## 跨端开发
+1. [Hybrid App开发总结](https://github.com/ruralist-siyi/front-end-Web-developer-interview/issues/19)
