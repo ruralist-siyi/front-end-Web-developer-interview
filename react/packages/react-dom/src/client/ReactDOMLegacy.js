@@ -110,6 +110,11 @@ function shouldHydrateDueToLegacyHeuristic(container) {
   );
 }
 
+/**
+ *
+ * @param {*} container 我们ReactDom.render传入的container dom元素
+ * @param {*} forceHydrate 布尔值，是否是ssr相关
+ */
 function legacyCreateRootFromDOMContainer(
   container: Container,
   forceHydrate: boolean,
@@ -120,6 +125,7 @@ function legacyCreateRootFromDOMContainer(
   if (!shouldHydrate) {
     let warned = false;
     let rootSibling;
+    //  while 循环去remove掉我们container的所有子元素(ssr的时候才需要合并渲染这些子节点)
     while ((rootSibling = container.lastChild)) {
       if (__DEV__) {
         if (
@@ -148,7 +154,7 @@ function legacyCreateRootFromDOMContainer(
       );
     }
   }
-
+  // 返回了ReactDOMBlockingRoot, 属性_internalRoot上挂载着fiberRootNode
   return createLegacyRoot(
     container,
     shouldHydrate
@@ -172,6 +178,14 @@ function warnOnInvalidCallback(callback: mixed, callerName: string): void {
   }
 }
 
+/**
+ *
+ * @param {*} parentComponent // 第一次render没有parentComponent
+ * @param {*} children // 也就是传入的根组件（example: <App />）的createElement返回的对象
+ * @param {*} container // 我们ReactDom.render传入的container dom元素
+ * @param {*} forceHydrate // ssr相关，先不管它
+ * @param {*} callback //  ReactDom.render的第三个参数，callback
+ */
 function legacyRenderSubtreeIntoContainer(
   parentComponent: ?React$Component<any, any>,
   children: ReactNodeList,
@@ -189,12 +203,16 @@ function legacyRenderSubtreeIntoContainer(
   let root: RootType = (container._reactRootContainer: any);
   let fiberRoot;
   if (!root) {
-    // Initial mount
+    // Initial mount 第一次渲染肯定是没这个root
+    // 通过 legacyCreateRootFromDOMContainer 方法 创建 我们的 ReactDOMBlockingRoot
+    // 这个ReactDOMBlockingRoot拥有过一个_internalRoot属性，这个属性指向我们的FiberRootNode
     root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
       container,
       forceHydrate,
     );
+    // 也就是我们的FiberRootNode
     fiberRoot = root._internalRoot;
+    // 处理我们的callback
     if (typeof callback === 'function') {
       const originalCallback = callback;
       callback = function() {
@@ -203,7 +221,9 @@ function legacyRenderSubtreeIntoContainer(
       };
     }
     // Initial mount should not be batched.
+    // 第一次mount的时候不需要去批量更新
     unbatchedUpdates(() => {
+      // updateContainer方法是我们进行调度渲染的核心方法
       updateContainer(children, fiberRoot, parentComponent, callback);
     });
   } else {
@@ -216,6 +236,7 @@ function legacyRenderSubtreeIntoContainer(
       };
     }
     // Update
+    // root一存在，状态变化等操作触发Update
     updateContainer(children, fiberRoot, parentComponent, callback);
   }
   return getPublicRootInstance(fiberRoot);
@@ -284,6 +305,12 @@ export function hydrate(
   );
 }
 
+/**
+ *
+ * @param {*} element 根组件（example: <App />）的createElement返回的对象
+ * @param {*} container 我们ReactDom.render传入的container dom元素
+ * @param {*} callback ReactDom.render的第三个参数，callback
+ */
 export function render(
   element: React$Element<any>,
   container: Container,

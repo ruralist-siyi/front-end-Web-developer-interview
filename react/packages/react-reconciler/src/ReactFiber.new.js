@@ -120,38 +120,40 @@ function FiberNode(
   mode: TypeOfMode,
 ) {
   // Instance
-  this.tag = tag;
-  this.key = key;
-  this.elementType = null;
-  this.type = null;
-  this.stateNode = null;
+  this.tag = tag; // 标记当前的WorkTag（组件类型ClassComponent、FunctionComponent等），FiberRoot 的 tag 为 HostRoot
+  this.key = key; // ReactElement（createElement返回的对象） 的key
+  this.elementType = null; // createElement的第一个参数， 大部分情况同type（比如说你是一个函数式组件，这个type就是你的组件函数），某些情况不同，比如FunctionComponent使用React.memo包裹
+  this.type = null; // createElement的第一个参数， 大部分情况同type，某些情况不同，比如FunctionComponent使用React.memo包裹
+  this.stateNode = null; //  FiberNode的local state，浏览器环境就是我们的 dom节点
 
   // Fiber
-  this.return = null;
-  this.child = null;
-  this.sibling = null;
+  this.return = null; // 指向父级的Fiber节点
+  this.child = null; // 指向子Fiber节点
+  this.sibling = null; // 指向兄弟节点
   this.index = 0;
 
-  this.ref = null;
+  this.ref = null; // ref属性
 
-  this.pendingProps = pendingProps;
-  this.memoizedProps = null;
-  this.updateQueue = null;
-  this.memoizedState = null;
-  this.dependencies = null;
+  this.pendingProps = pendingProps; // Update的新的props
+  this.memoizedProps = null; // 存储的上一次渲染的props
+  this.updateQueue = null; // 存储组件Update的队列
+  this.memoizedState = null; // 存储的上一次渲染的state
+  this.dependencies = null; // FiberNode的依赖（context、events等）
 
   this.mode = mode;
 
-  // Effects
-  this.effectTag = NoEffect;
-  this.nextEffect = null;
-
+  // Effects：内部维护了一个单向链表，便于我们在后续阶段更高效的作出更新
+  this.effectTag = NoEffect; // 也就是side effect标识（Placement、Update...）
+  this.nextEffect = null; // 单向链表中的指针，指向下一个side effect
+  // 子树subtree的第一个与最后一个effect
   this.firstEffect = null;
   this.lastEffect = null;
-
+  // React V16.3之前都是通过expirationTime来进行内部调度
+  // 新版本使用了这个lanes，好像更加简洁了
   this.lanes = NoLanes;
   this.childLanes = NoLanes;
-
+  // 双缓冲技术：current 与 workInProgress 的相互转换
+  // （也就是在内存中应用Update的操作的是workInProgress tree，Update结束后将current指针指向workInProgress tree一次性render到页面上）
   this.alternate = null;
 
   if (enableProfilerTimer) {
@@ -251,6 +253,7 @@ export function resolveLazyComponentTag(Component: Function): WorkTag {
 }
 
 // This is used to create an alternate fiber to do work on.
+// createWorkInProgress方法专门创建WorkInProgress tree
 export function createWorkInProgress(current: Fiber, pendingProps: any): Fiber {
   let workInProgress = current.alternate;
   if (workInProgress === null) {

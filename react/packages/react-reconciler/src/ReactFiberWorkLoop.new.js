@@ -437,8 +437,11 @@ export function requestUpdateLane(
   return lane;
 }
 
+/**
+ * scheduleUpdateOnFiber 正式开始调度更新
+ */
 export function scheduleUpdateOnFiber(
-  fiber: Fiber,
+  fiber: Fiber, // FiberRootNode.current 也就是 FiberRoot
   lane: Lane,
   eventTime: number,
 ) {
@@ -468,6 +471,7 @@ export function scheduleUpdateOnFiber(
       // This is a legacy edge case. The initial mount of a ReactDOM.render-ed
       // root inside of batchedUpdates should be synchronous, but layout updates
       // should be deferred until the end of the batch.
+      // 非concurrent模式同步进入 recolicer阶段
       performSyncWorkOnRoot(root);
     } else {
       ensureRootIsScheduled(root, eventTime);
@@ -1230,6 +1234,7 @@ function prepareFreshStack(root: FiberRoot, lanes: Lanes) {
     }
   }
   workInProgressRoot = root;
+  // 根据当前的root.current 创建 workInProgress tree
   workInProgress = createWorkInProgress(root.current, null);
   workInProgressRootRenderLanes = subtreeRenderLanes = workInProgressRootIncludedLanes = lanes;
   workInProgressRootExitStatus = RootIncomplete;
@@ -1430,6 +1435,7 @@ export function renderHasNotSuspendedYet(): boolean {
   return workInProgressRootExitStatus === RootIncomplete;
 }
 
+// performSyncWorkOnRoot会调用该方法
 function renderRootSync(root: FiberRoot, lanes: Lanes) {
   const prevExecutionContext = executionContext;
   executionContext |= RenderContext;
@@ -1531,6 +1537,8 @@ function renderRootConcurrent(root: FiberRoot, lanes: Lanes) {
 }
 
 /** @noinline */
+// concurrent模式下会走这个workLoop
+// shouldYield方法是我们schedule的核心，判断是否有更高优先级的任务或者当前浏览器没有剩余的空闲时间
 function workLoopConcurrent() {
   // Perform work until Scheduler asks us to yield
   while (workInProgress !== null && !shouldYield()) {

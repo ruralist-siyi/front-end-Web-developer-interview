@@ -3056,7 +3056,7 @@ function remountFiber(
 }
 
 function beginWork(
-  current: Fiber | null,
+  current: Fiber | null, // unitOfWork.alternate
   workInProgress: Fiber,
   renderLanes: Lanes,
 ): Fiber | null {

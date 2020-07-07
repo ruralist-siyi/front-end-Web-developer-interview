@@ -235,6 +235,9 @@ function findHostInstanceWithWarning(
   return findHostInstance(component);
 }
 
+/**
+ * 创建并返回我们的FiberRootNode
+ */
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,
@@ -244,6 +247,13 @@ export function createContainer(
   return createFiberRoot(containerInfo, tag, hydrate, hydrationCallbacks);
 }
 
+/**
+ * mount阶段进行调度更新渲染的起点
+ * @param {*} element // 我们ReactDom.render的组件（example: <App />）render createElement返回的对象
+ * @param {*} container // FiberRootNode 也就是我们整个应用的根FiberNode, FiberRootNode.current = FiberNode
+ * @param {*} parentComponent // 第一次mount为null
+ * @param {*} callback // ReactDom.render的第三个参数的callback
+ */
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
@@ -253,6 +263,7 @@ export function updateContainer(
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
+  // 这个current获取的就是我们App的RootFiber，FiberRootNode.current; 环形：FiberRootNode.current.stateNode = FiberRootNode
   const current = container.current;
   const eventTime = requestEventTime();
   if (__DEV__) {
@@ -288,12 +299,12 @@ export function updateContainer(
       );
     }
   }
-
+  // createUpdate 用来创建 updateQueue 中的 update对象
   const update = createUpdate(eventTime, lane, suspenseConfig);
   // Caution: React DevTools currently depends on this property
   // being called "element".
+  // update对象的payload属性值是我们的根ReactElement对象
   update.payload = {element};
-
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
     if (__DEV__) {
@@ -307,8 +318,8 @@ export function updateContainer(
     }
     update.callback = callback;
   }
-
   enqueueUpdate(current, update);
+  // 正式进入我们的调度更新阶段
   scheduleUpdateOnFiber(current, lane, eventTime);
 
   return lane;

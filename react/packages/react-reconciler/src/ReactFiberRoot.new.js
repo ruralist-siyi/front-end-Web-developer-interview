@@ -80,6 +80,10 @@ function FiberRootNode(containerInfo, tag, hydrate) {
   }
 }
 
+/**
+ * 创建FiberRootNode
+ * 该实例的 current 属性指向一个新创建的 FiberNode 实例，并将此 FiberNode 实例的 stateNode 指向 FiberRootNode，形成一个回链
+ */
 export function createFiberRoot(
   containerInfo: any,
   tag: RootTag,
@@ -93,10 +97,12 @@ export function createFiberRoot(
 
   // Cyclic construction. This cheats the type system right now because
   // stateNode is any.
+  // createHostRootFiber 其实也是调用 createFiber 方法创建FiberNode，但是不同的是tag为 HostRoot（这个tag是WorkTag非RootTag）
   const uninitializedFiber = createHostRootFiber(tag);
   root.current = uninitializedFiber;
   uninitializedFiber.stateNode = root;
-
+  // 给当前创建的 FiberNode 进行初始化绑定 fiber.updateQueue属性
+  // updateQueue属性很重要，组件状态的变更都是存储在updateQueue属性中
   initializeUpdateQueue(uninitializedFiber);
 
   return root;

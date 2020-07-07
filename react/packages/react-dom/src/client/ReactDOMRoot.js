@@ -115,6 +115,12 @@ ReactDOMRoot.prototype.unmount = ReactDOMBlockingRoot.prototype.unmount = functi
   });
 };
 
+/**
+ * 此方法
+ * @param {*} container // dom容器
+ * @param {*} tag // 当前版本render方法默认的tag为LegacyRoot  LegacyRoot = 0; BlockingRoot = 1; ConcurrentRoot = 2;
+ * @param {*} options
+ */
 function createRootImpl(
   container: Container,
   tag: RootTag,
@@ -129,6 +135,7 @@ function createRootImpl(
       options.hydrationOptions != null &&
       options.hydrationOptions.mutableSources) ||
     null;
+  // createContainer（方法来自react-reconciler 中的 ReactFiberReconciler.js 实际上调用createFiberRoot生成FiberRootNode实例）
   const root = createContainer(container, tag, hydrate, hydrationCallbacks);
   markContainerAsRoot(root.current, container);
   const containerNodeType = container.nodeType;
