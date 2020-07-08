@@ -471,7 +471,7 @@ export function scheduleUpdateOnFiber(
       // This is a legacy edge case. The initial mount of a ReactDOM.render-ed
       // root inside of batchedUpdates should be synchronous, but layout updates
       // should be deferred until the end of the batch.
-      // 非concurrent模式同步进入 recolicer阶段
+      // 非concurrent模式同步不进行schedluer 直接进入 recolicer阶段
       performSyncWorkOnRoot(root);
     } else {
       ensureRootIsScheduled(root, eventTime);
@@ -520,7 +520,7 @@ export function scheduleUpdateOnFiber(
 // e.g. retrying a Suspense boundary isn't an update, but it does schedule work
 // on a fiber.
 function markUpdateLaneFromFiberToRoot(
-  fiber: Fiber,
+  fiber: Fiber, // FiberRoot
   lane: Lane,
 ): FiberRoot | null {
   // Update the source fiber's lanes
@@ -541,6 +541,7 @@ function markUpdateLaneFromFiberToRoot(
   let node = fiber.return;
   let root = null;
   if (node === null && fiber.tag === HostRoot) {
+    // 这里也就是fiber 也就是 FiberRoot FiberRoot.stateNode = FiberRootNode
     root = fiber.stateNode;
   } else {
     while (node !== null) {
@@ -948,6 +949,12 @@ function markRootSuspended(root, suspendedLanes) {
 
 // This is the entry point for synchronous tasks that don't go
 // through Scheduler
+/**
+ *
+ * @param {*} root FiberRootNode
+ * FiberRootNode.current = FiberRoot; FiberRoot.stateNode = FiberRootNode;
+ * FiberRootNode.alternate = null; FiberRootNode.child = null;
+ */
 function performSyncWorkOnRoot(root) {
   invariant(
     (executionContext & (RenderContext | CommitContext)) === NoContext,
@@ -1449,7 +1456,8 @@ function renderRootSync(root: FiberRoot, lanes: Lanes) {
   }
 
   const prevInteractions = pushInteractions(root);
-
+  // do while 循环
+  // workLoopSync 这里主要是判断 workInProgress 是否存在，如果存在就会一直执行workLoopSync 中的 performUnitOfWork
   do {
     try {
       workLoopSync();
@@ -1486,6 +1494,7 @@ function renderRootSync(root: FiberRoot, lanes: Lanes) {
 /** @noinline */
 function workLoopSync() {
   // Already timed out, so perform work without checking if we need to yield.
+  // 已经超时，因此在执行工作时无需检查是否需要停止
   while (workInProgress !== null) {
     performUnitOfWork(workInProgress);
   }
