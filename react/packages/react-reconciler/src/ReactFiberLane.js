@@ -624,6 +624,12 @@ function pickArbitraryLaneIndex(lanes: Lane | Lanes) {
   return 31 - clz32(lanes);
 }
 
+/**
+ * 典型的位运算，这里是判断你的lane（优先级）是否已过期，过期则跳过更新
+ * React V16.12之前的架构是通过过期时间去判断的
+ * @param {*} a
+ * @param {*} b
+ */
 export function includesSomeLane(a: Lanes | Lane, b: Lanes | Lane) {
   return (a & b) !== NoLanes;
 }

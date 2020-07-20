@@ -234,8 +234,10 @@ const RootCompleted = 5;
 // Describes where we are in the React execution stack
 let executionContext: ExecutionContext = NoContext;
 // The root we're working on
+// 当前正在工作的FiberRoot
 let workInProgressRoot: FiberRoot | null = null;
 // The fiber we're working on
+// 当前正在工作的Fiber
 let workInProgress: Fiber | null = null;
 // The lanes we're rendering
 let workInProgressRootRenderLanes: Lanes = NoLanes;
