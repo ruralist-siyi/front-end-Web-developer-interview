@@ -136,7 +136,7 @@ function FiberNode(
 
   this.pendingProps = pendingProps; // Update的新的props
   this.memoizedProps = null; // 存储的上一次渲染的props
-  this.updateQueue = null; // 存储组件Update的队列
+  this.updateQueue = null; // 存储组件Update的队列(同一组件的多个Update会形成一个链表保存在updateQueue中)
   this.memoizedState = null; // 存储的上一次渲染的state
   this.dependencies = null; // FiberNode的依赖（context、events等）
 
@@ -148,7 +148,7 @@ function FiberNode(
   // 子树subtree的第一个与最后一个effect
   this.firstEffect = null;
   this.lastEffect = null;
-  // React V16.3之前都是通过expirationTime来进行内部调度
+  // React V16.13之前都是通过expirationTime来进行内部调度
   // 新版本使用了这个lanes，好像更加简洁了
   this.lanes = NoLanes;
   this.childLanes = NoLanes;
